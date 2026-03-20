@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_5898163caab9769a9fade3654a1e9631 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_5898163caab9769a9fade3654a1e9631" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_5898163caab9769a9fade3654a1e9631 = L.map(
+                "map_5898163caab9769a9fade3654a1e9631",
+                {
+                    center: [55.0, 20.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_a4c299f022334184d52c0b87132e1d21 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_a4c299f022334184d52c0b87132e1d21.addTo(map_5898163caab9769a9fade3654a1e9631);
+        
+    
+            var feature_group_c9139386b055b674c556f9dee9b5ef6d = L.featureGroup(
+                {
+}
+            );
+        
+    
+            var circle_4fcd4f687bc4f87dfb96238f71fa1966 = L.circle(
+                [59.88, 29.88],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+        var popup_91e2c1e68bc70c534d653b400e5906bc = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_d39e2922c574267412aaacf134907858 = $(`<div id="html_d39e2922c574267412aaacf134907858" style="width: 100.0%; height: 100.0%;"><b>Primorsk</b><br>Russian oil export port</div>`)[0];
+                popup_91e2c1e68bc70c534d653b400e5906bc.setContent(html_d39e2922c574267412aaacf134907858);
+            
+        
+
+        circle_4fcd4f687bc4f87dfb96238f71fa1966.bindPopup(popup_91e2c1e68bc70c534d653b400e5906bc)
+        ;
+
+        
+    
+    
+            var marker_ce7dc60a3c0397ba1e4cf10dba383f6e = L.marker(
+                [59.88, 29.88],
+                {
+}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+            var icon_5c99e50d238024ce5c069549b133b43f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "anchor",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8794e68dc5f3fd88f7ddcf40b260c3a0 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_c8458f086d3cbe282cb4a986fcb044db = $(`<div id="html_c8458f086d3cbe282cb4a986fcb044db" style="width: 100.0%; height: 100.0%;">Primorsk</div>`)[0];
+                popup_8794e68dc5f3fd88f7ddcf40b260c3a0.setContent(html_c8458f086d3cbe282cb4a986fcb044db);
+            
+        
+
+        marker_ce7dc60a3c0397ba1e4cf10dba383f6e.bindPopup(popup_8794e68dc5f3fd88f7ddcf40b260c3a0)
+        ;
+
+        
+    
+    
+                marker_ce7dc60a3c0397ba1e4cf10dba383f6e.setIcon(icon_5c99e50d238024ce5c069549b133b43f);
+            
+    
+            var circle_a8bfc83a5e39b13fceedd6c5565ad868 = L.circle(
+                [59.68, 28.31],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+        var popup_591321069425d542ce08b16886cb7870 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_5d0c9b174221b79a732b5b7d1a55e3f2 = $(`<div id="html_5d0c9b174221b79a732b5b7d1a55e3f2" style="width: 100.0%; height: 100.0%;"><b>Ust-Luga</b><br>Russian oil export port</div>`)[0];
+                popup_591321069425d542ce08b16886cb7870.setContent(html_5d0c9b174221b79a732b5b7d1a55e3f2);
+            
+        
+
+        circle_a8bfc83a5e39b13fceedd6c5565ad868.bindPopup(popup_591321069425d542ce08b16886cb7870)
+        ;
+
+        
+    
+    
+            var marker_1bcded328993480355b86c953eaafa30 = L.marker(
+                [59.68, 28.31],
+                {
+}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+            var icon_1e1fa0284faff1902f7fb0504c8c9987 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "anchor",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f1f84add3e42066a373c95ed4e7627f4 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_7279f3a0c26087684a4acb9a1dcd3efa = $(`<div id="html_7279f3a0c26087684a4acb9a1dcd3efa" style="width: 100.0%; height: 100.0%;">Ust-Luga</div>`)[0];
+                popup_f1f84add3e42066a373c95ed4e7627f4.setContent(html_7279f3a0c26087684a4acb9a1dcd3efa);
+            
+        
+
+        marker_1bcded328993480355b86c953eaafa30.bindPopup(popup_f1f84add3e42066a373c95ed4e7627f4)
+        ;
+
+        
+    
+    
+                marker_1bcded328993480355b86c953eaafa30.setIcon(icon_1e1fa0284faff1902f7fb0504c8c9987);
+            
+    
+            var circle_8eef504eaadda05ab637d2caf4c1ad87 = L.circle(
+                [44.72, 37.77],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+        var popup_f0c8c3ed5cdaae64ca9d1b8fa4b69d98 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_aea69d4408553a64486547bb2642c444 = $(`<div id="html_aea69d4408553a64486547bb2642c444" style="width: 100.0%; height: 100.0%;"><b>Novorossiysk</b><br>Russian oil export port</div>`)[0];
+                popup_f0c8c3ed5cdaae64ca9d1b8fa4b69d98.setContent(html_aea69d4408553a64486547bb2642c444);
+            
+        
+
+        circle_8eef504eaadda05ab637d2caf4c1ad87.bindPopup(popup_f0c8c3ed5cdaae64ca9d1b8fa4b69d98)
+        ;
+
+        
+    
+    
+            var marker_695979e0804a0e2b8182010c1602ead1 = L.marker(
+                [44.72, 37.77],
+                {
+}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+            var icon_838d9eb82d2d6e601346e26c8bfd5aed = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "anchor",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_e1528df129af4f030502fa52123b42cf = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_d6a7351e26c133040a20108b3c15123f = $(`<div id="html_d6a7351e26c133040a20108b3c15123f" style="width: 100.0%; height: 100.0%;">Novorossiysk</div>`)[0];
+                popup_e1528df129af4f030502fa52123b42cf.setContent(html_d6a7351e26c133040a20108b3c15123f);
+            
+        
+
+        marker_695979e0804a0e2b8182010c1602ead1.bindPopup(popup_e1528df129af4f030502fa52123b42cf)
+        ;
+
+        
+    
+    
+                marker_695979e0804a0e2b8182010c1602ead1.setIcon(icon_838d9eb82d2d6e601346e26c8bfd5aed);
+            
+    
+            var circle_77e5ec41787fc099a9f0ce5d341b4340 = L.circle(
+                [45.34, 36.67],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+        var popup_418282c60ccc81797fb988bfad269816 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_ca6d27e3248c5dce2acd3c2579feb2ec = $(`<div id="html_ca6d27e3248c5dce2acd3c2579feb2ec" style="width: 100.0%; height: 100.0%;"><b>Kavkaz</b><br>Russian oil export port</div>`)[0];
+                popup_418282c60ccc81797fb988bfad269816.setContent(html_ca6d27e3248c5dce2acd3c2579feb2ec);
+            
+        
+
+        circle_77e5ec41787fc099a9f0ce5d341b4340.bindPopup(popup_418282c60ccc81797fb988bfad269816)
+        ;
+
+        
+    
+    
+            var marker_3f558e29406a4134281630ffaee698be = L.marker(
+                [45.34, 36.67],
+                {
+}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+            var icon_5c61a2749eb71c9af74740460f467ab8 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "anchor",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_734e1abb69957f97645d83955d7f1083 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_734c3f1f18486153930f317f8a52cb2d = $(`<div id="html_734c3f1f18486153930f317f8a52cb2d" style="width: 100.0%; height: 100.0%;">Kavkaz</div>`)[0];
+                popup_734e1abb69957f97645d83955d7f1083.setContent(html_734c3f1f18486153930f317f8a52cb2d);
+            
+        
+
+        marker_3f558e29406a4134281630ffaee698be.bindPopup(popup_734e1abb69957f97645d83955d7f1083)
+        ;
+
+        
+    
+    
+                marker_3f558e29406a4134281630ffaee698be.setIcon(icon_5c61a2749eb71c9af74740460f467ab8);
+            
+    
+            var circle_cbc1d718d09a2ac241f2d874f24f80c8 = L.circle(
+                [43.08, 131.89],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+        var popup_3496291671ee405550f7a056306a0b20 = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_06b4b525c73fa7af5ee856728f43a763 = $(`<div id="html_06b4b525c73fa7af5ee856728f43a763" style="width: 100.0%; height: 100.0%;"><b>Vladivostok</b><br>Russian oil export port</div>`)[0];
+                popup_3496291671ee405550f7a056306a0b20.setContent(html_06b4b525c73fa7af5ee856728f43a763);
+            
+        
+
+        circle_cbc1d718d09a2ac241f2d874f24f80c8.bindPopup(popup_3496291671ee405550f7a056306a0b20)
+        ;
+
+        
+    
+    
+            var marker_fa64dc7ccc42f18c68f38163a18fd259 = L.marker(
+                [43.08, 131.89],
+                {
+}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+            var icon_bbf1efe71a97afa0563f50e36dc8e4c0 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "anchor",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_8a38704ed9cfbee0159b4772c1feee1d = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_55af82ba66d0b1dde8a458cf0cb7bfe1 = $(`<div id="html_55af82ba66d0b1dde8a458cf0cb7bfe1" style="width: 100.0%; height: 100.0%;">Vladivostok</div>`)[0];
+                popup_8a38704ed9cfbee0159b4772c1feee1d.setContent(html_55af82ba66d0b1dde8a458cf0cb7bfe1);
+            
+        
+
+        marker_fa64dc7ccc42f18c68f38163a18fd259.bindPopup(popup_8a38704ed9cfbee0159b4772c1feee1d)
+        ;
+
+        
+    
+    
+                marker_fa64dc7ccc42f18c68f38163a18fd259.setIcon(icon_bbf1efe71a97afa0563f50e36dc8e4c0);
+            
+    
+            var circle_36d282c831e90496ab66c8c0b084a2c5 = L.circle(
+                [69.0, 33.02],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+        var popup_b462d8cb555aa4af9db8d9509521078a = L.popup({
+  "maxWidth": 200,
+});
+
+        
+            
+                var html_6da210c79e889e39be7828fa966bc90a = $(`<div id="html_6da210c79e889e39be7828fa966bc90a" style="width: 100.0%; height: 100.0%;"><b>Murmansk</b><br>Russian oil export port</div>`)[0];
+                popup_b462d8cb555aa4af9db8d9509521078a.setContent(html_6da210c79e889e39be7828fa966bc90a);
+            
+        
+
+        circle_36d282c831e90496ab66c8c0b084a2c5.bindPopup(popup_b462d8cb555aa4af9db8d9509521078a)
+        ;
+
+        
+    
+    
+            var marker_8427d5d257d149e56ed87b1e0232c6fe = L.marker(
+                [69.0, 33.02],
+                {
+}
+            ).addTo(feature_group_c9139386b055b674c556f9dee9b5ef6d);
+        
+    
+            var icon_69ec224656c6de4b1ad0768311320710 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "anchor",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_53419944d9833502bad816b652d4c241 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_544545059197453a994c9133be9256e6 = $(`<div id="html_544545059197453a994c9133be9256e6" style="width: 100.0%; height: 100.0%;">Murmansk</div>`)[0];
+                popup_53419944d9833502bad816b652d4c241.setContent(html_544545059197453a994c9133be9256e6);
+            
+        
+
+        marker_8427d5d257d149e56ed87b1e0232c6fe.bindPopup(popup_53419944d9833502bad816b652d4c241)
+        ;
+
+        
+    
+    
+                marker_8427d5d257d149e56ed87b1e0232c6fe.setIcon(icon_69ec224656c6de4b1ad0768311320710);
+            
+    
+            feature_group_c9139386b055b674c556f9dee9b5ef6d.addTo(map_5898163caab9769a9fade3654a1e9631);
+        
+    
+            var feature_group_76a80a144aee2f1d47c305992b76f772 = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_76a80a144aee2f1d47c305992b76f772.addTo(map_5898163caab9769a9fade3654a1e9631);
+        
+    
+            var feature_group_26bbfd76d5307b7054acf3b9e0ba338a = L.featureGroup(
+                {
+}
+            );
+        
+    
+            feature_group_26bbfd76d5307b7054acf3b9e0ba338a.addTo(map_5898163caab9769a9fade3654a1e9631);
+        
+    
+            var layer_control_a4d79316777d2346a01d16eefd6204c0_layers = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_a4c299f022334184d52c0b87132e1d21,
+                },
+                overlays :  {
+                    "Russian Oil Ports" : feature_group_c9139386b055b674c556f9dee9b5ef6d,
+                    "Vessels" : feature_group_76a80a144aee2f1d47c305992b76f772,
+                    "AIS Dark Zones" : feature_group_26bbfd76d5307b7054acf3b9e0ba338a,
+                },
+            };
+            let layer_control_a4d79316777d2346a01d16eefd6204c0 = L.control.layers(
+                layer_control_a4d79316777d2346a01d16eefd6204c0_layers.base_layers,
+                layer_control_a4d79316777d2346a01d16eefd6204c0_layers.overlays,
+                {
+  "position": "topright",
+  "collapsed": true,
+  "autoZIndex": true,
+}
+            ).addTo(map_5898163caab9769a9fade3654a1e9631);
+
+        
+    
+            L.control.fullscreen(
+                {
+  "position": "topleft",
+  "title": "Full Screen",
+  "titleCancel": "Exit Full Screen",
+  "forceSeparateButton": false,
+}
+            ).addTo(map_5898163caab9769a9fade3654a1e9631);
+        
+</script>
+</html>

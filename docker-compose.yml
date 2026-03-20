@@ -1,0 +1,48 @@
+services:
+  sft:
+    build: .
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
+    command: ["--help"]
+
+  ingest:
+    build: .
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
+    command: ["ingest", "--source", "all"]
+
+  score:
+    build: .
+    volumes:
+      - ./data:/app/data
+    env_file:
+      - .env
+    command: ["score"]
+
+  digest:
+    build: .
+    volumes:
+      - ./data:/app/data
+      - ./data/digests:/app/data/digests
+    env_file:
+      - .env
+    command: ["digest"]
+
+  # Future: PostgreSQL for production
+  # postgres:
+  #   image: postgres:16
+  #   environment:
+  #     POSTGRES_DB: shadow_fleet
+  #     POSTGRES_USER: sft
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  #   volumes:
+  #     - pgdata:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+
+# volumes:
+#   pgdata:

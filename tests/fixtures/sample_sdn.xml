@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdnList xmlns="http://www.treasury.gov/ofac/downloads/sdn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <publshInformation>
+    <Publish_Date>03/15/2026</Publish_Date>
+    <Record_Count>3</Record_Count>
+  </publshInformation>
+  <sdnEntry>
+    <uid>12345</uid>
+    <sdnType>Vessel</sdnType>
+    <lastName>TEST VESSEL ALPHA</lastName>
+    <programList>
+      <program>UKRAINE-EO14024</program>
+    </programList>
+    <idList>
+      <id>
+        <idType>IMO Ship Identification Number</idType>
+        <idNumber>9876543</idNumber>
+      </id>
+    </idList>
+    <vesselInfo>
+      <callSign>TEST1</callSign>
+      <vesselType>Oil Tanker</vesselType>
+      <tonnage>150000</tonnage>
+      <vesselFlag>Panama</vesselFlag>
+    </vesselInfo>
+  </sdnEntry>
+  <sdnEntry>
+    <uid>12346</uid>
+    <sdnType>Vessel</sdnType>
+    <lastName>TEST VESSEL BETA</lastName>
+    <programList>
+      <program>RUSSIA-EO14024</program>
+      <program>UKRAINE-EO13662</program>
+    </programList>
+    <idList>
+      <id>
+        <idType>IMO</idType>
+        <idNumber>9876544</idNumber>
+      </id>
+    </idList>
+    <vesselInfo>
+      <callSign>TEST2</callSign>
+      <vesselType>Crude Oil Tanker</vesselType>
+      <tonnage>110000</tonnage>
+      <vesselFlag>Liberia</vesselFlag>
+    </vesselInfo>
+  </sdnEntry>
+  <sdnEntry>
+    <uid>99999</uid>
+    <sdnType>Individual</sdnType>
+    <lastName>NOT A VESSEL</lastName>
+    <programList>
+      <program>UKRAINE-EO14024</program>
+    </programList>
+  </sdnEntry>
+</sdnList>

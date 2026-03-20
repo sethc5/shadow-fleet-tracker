@@ -1,0 +1,27 @@
+[project]
+name = "shadow-fleet-tracker"
+version = "0.1.0"
+description = "Open-source tool for monitoring sanctioned Russian oil tankers"
+readme = "SHADOW_FLEET_TRACKER.md"
+requires-python = ">=3.11"
+dependencies = [
+    "requests>=2.31",
+    "pandas>=2.1",
+    "fastapi>=0.104",
+    "uvicorn>=0.24",
+    "python-dotenv>=1.0",
+    "pydantic>=2.5",
+    "pyyaml>=6.0",
+    "folium>=0.15",
+]
+
+[project.scripts]
+sft = "src.cli:main"
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]

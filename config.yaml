@@ -1,0 +1,46 @@
+# Shadow Fleet Tracker — Configuration
+# Override scoring weights, alert thresholds, and risk flags here.
+# Values shown are defaults. Remove or comment out to use defaults.
+
+scoring:
+  weights:
+    sanctioned: 100             # On any sanctions list
+    ais_dark_russia: 25         # AIS gap near Russian port
+    ais_dark_open: 15           # AIS gap in open water
+    flag_high_risk: 20          # Permissive registry flag
+    flag_change_90d: 20         # Flag changed recently
+    russian_port_30d: 25        # Called at Russian port
+    sts_activity: 25            # Ship-to-ship transfer
+    ownership_change_90d: 15    # Owner changed recently
+    age_over_20: 10             # Vessel age > 20 years
+  alert_threshold: 60           # Score threshold for generating alerts
+
+  high_risk_flags:
+    - CM  # Cameroon
+    - SL  # Sierra Leone
+    - KM  # Comoros
+    - PW  # Palau
+    - CK  # Cook Islands
+    - TZ  # Tanzania
+
+output:
+  digest_max_vessels: 20        # Max vessels shown in digest
+  digest_max_alerts: 50         # Max alerts shown in digest
+
+# API server configuration
+api:
+  auth_key: ""                  # Set SFT_API_KEY env var to enable auth
+  rate_limit_per_minute: 60     # Requests per minute per IP
+
+# Telegram bot configuration
+telegram:
+  enabled: false                # Set to true after configuring bot_token
+  bot_token: ""                 # Set TELEGRAM_BOT_TOKEN env var
+  chat_id: ""                   # Default channel for digests
+  alert_chat_id: ""             # Separate channel for real-time alerts (optional)
+
+# OSINTukraine archiving integration
+osintukraine:
+  enabled: false                # Set to true after configuring
+  api_url: ""                   # Their archiving endpoint
+  api_key: ""                   # Set OSINTUKRAINE_API_KEY env var
