@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sdnList xmlns="https://sanctionslistservice.ofac.treas.gov/api/PublicationPreview/exports/XML" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <publshInformation>
+    <Publish_Date>03/20/2026</Publish_Date>
+    <Record_Count>2</Record_Count>
+  </publshInformation>
+  <sdnEntry>
+    <uid>73413</uid>
+    <lastName>EBANO</lastName>
+    <sdnType>Vessel</sdnType>
+    <programList>
+      <program>RUSSIA-EO14024</program>
+    </programList>
+    <addressList>
+      <address>
+        <uid>1001</uid>
+        <city>Majuro</city>
+        <country>Marshall Islands</country>
+      </address>
+    </addressList>
+    <idList>
+      <id>
+        <uid>2001</uid>
+        <idType>Vessel Registration Identification</idType>
+        <idNumber>IMO 7406784</idNumber>
+      </id>
+    </idList>
+    <vesselInfo>
+      <uid>3001</uid>
+      <vesselType>Crude Oil Tanker</vesselType>
+      <vesselFlag>Comoros</vesselFlag>
+      <tonnage>100000</tonnage>
+    </vesselInfo>
+  </sdnEntry>
+  <sdnEntry>
+    <uid>99999</uid>
+    <lastName>NOT A VESSEL</lastName>
+    <sdnType>Individual</sdnType>
+  </sdnEntry>
+</sdnList>

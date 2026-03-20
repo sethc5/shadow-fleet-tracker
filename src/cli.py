@@ -449,6 +449,34 @@ def cmd_cleanup(args):
     print(f"Deleted {deleted} positions older than {days} days")
 
 
+def cmd_unpack_sdn(args):
+    """Unpack OFAC SDN XML vessel entries into JSON."""
+    import json
+    from datetime import UTC, datetime
+
+    from .ingest.ofac import parse_sdn_vessels
+
+    if args.xml:
+        xml_path = Path(args.xml)
+    elif Path("sdn.xml").exists():
+        xml_path = Path("sdn.xml")
+    else:
+        xml_path = None
+
+    output = Path(args.output)
+    output.parent.mkdir(parents=True, exist_ok=True)
+
+    vessels = parse_sdn_vessels(xml_path)
+    payload = {
+        "generated_at": datetime.now(UTC).isoformat(),
+        "source_xml": str(xml_path) if xml_path else "downloaded from OFAC endpoint",
+        "count": len(vessels),
+        "vessels": vessels,
+    }
+    output.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+    print(f"Unpacked {len(vessels)} vessel entries to {output}")
+
+
 def main():
     parser = argparse.ArgumentParser(
         prog="sft",
@@ -521,6 +549,11 @@ def main():
     p_cleanup = subparsers.add_parser("cleanup", help="Delete old position data")
     p_cleanup.add_argument("--days", type=int, default=90, help="Delete positions older than N days (default: 90)")
     p_cleanup.set_defaults(func=cmd_cleanup)
+
+    p_unpack = subparsers.add_parser("unpack-sdn", help="Unpack OFAC SDN XML vessel entries to JSON")
+    p_unpack.add_argument("--xml", help="Path to SDN XML (default: ./sdn.xml if present)")
+    p_unpack.add_argument("--output", default="docs/ofac_sdn_vessels.json", help="Output JSON file")
+    p_unpack.set_defaults(func=cmd_unpack_sdn)
 
     args = parser.parse_args()
 

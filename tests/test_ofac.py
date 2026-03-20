@@ -9,6 +9,7 @@ from src.db import Database
 from src.ingest.ofac import ingest_ofac, parse_sdn_vessels
 
 FIXTURE_PATH = Path(__file__).parent / "fixtures" / "sample_sdn.xml"
+MODERN_FIXTURE_PATH = Path(__file__).parent / "fixtures" / "sample_sdn_modern.xml"
 
 
 @pytest.fixture
@@ -46,6 +47,17 @@ def test_parse_vessel_beta():
     assert "RUSSIA-EO14024" in beta["programs"]
     assert "UKRAINE-EO13662" in beta["programs"]
     assert beta["vessel_info"]["flag"] == "Liberia"
+
+
+def test_parse_modern_sdn_imo_format():
+    vessels = parse_sdn_vessels(MODERN_FIXTURE_PATH)
+    assert len(vessels) == 1
+    modern = vessels[0]
+    assert modern["imo"] == 7406784
+    assert modern["name"] == "EBANO"
+    assert "RUSSIA-EO14024" in modern["programs"]
+    assert modern["vessel_info"]["flag"] == "Comoros"
+    assert modern["addresses"][0]["city"] == "Majuro"
 
 
 def test_ingest_ofac(db):

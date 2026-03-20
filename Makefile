@@ -1,4 +1,4 @@
-.PHONY: install test ingest score digest serve status track track-all export map site discover daemon daemon-start daemon-stop publish telegram-send telegram-bot sync-osintukraine clean docker-build docker-ingest docker-score docker-digest
+.PHONY: install test ingest score digest serve status track track-all export map site discover daemon daemon-start daemon-stop publish telegram-send telegram-bot sync-osintukraine unpack-sdn clean docker-build docker-ingest docker-score docker-digest
 
 VENV := .venv/bin/python
 
@@ -58,6 +58,9 @@ map:
 
 site:
 	$(VENV) -m src.cli site
+
+unpack-sdn:
+	$(VENV) -m src.cli unpack-sdn --output $(or $(OUTPUT),docs/ofac_sdn_vessels.json)
 
 discover:
 	$(VENV) -m src.cli discover

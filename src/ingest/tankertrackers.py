@@ -71,7 +71,17 @@ def parse_sanctioned_csv(csv_path: Path | None = None) -> list[dict]:
     vessels = []
     for row in reader:
         # Lowercase all keys for flexible matching
-        lower_row = {k.lower().strip(): v.strip() if v else "" for k, v in row.items()}
+        lower_row = {}
+        for k, v in (row or {}).items():
+            key = (k or "").lower().strip()
+            if isinstance(v, list):
+                val = v[0].strip() if v and v[0] else ""
+            elif isinstance(v, str):
+                val = v.strip()
+            else:
+                val = str(v).strip() if v else ""
+            if key:
+                lower_row[key] = val
 
         # Find IMO
         imo = None

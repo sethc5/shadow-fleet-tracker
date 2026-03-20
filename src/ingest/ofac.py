@@ -1,6 +1,7 @@
 """OFAC SDN List parser — downloads and extracts vessel entries with IMO numbers."""
 
 import logging
+import re
 import xml.etree.ElementTree as ET
 from pathlib import Path
 from typing import Optional
@@ -61,9 +62,17 @@ def _extract_imo_from_entry(entry_elem: ET.Element) -> Optional[int]:
         if id_type is not None and id_num is not None:
             type_text = (id_type.text or "").strip().upper()
             num_text = (id_num.text or "").strip()
-            # OFAC uses "IMO Ship Identification Number" or just "IMO"
-            if "IMO" in type_text and num_text.isdigit():
-                return int(num_text)
+            # OFAC format evolved in 2026 to use:
+            # idType="Vessel Registration Identification", idNumber="IMO 7406784"
+            imo = _parse_imo_number(num_text)
+            if imo is None:
+                continue
+            if (
+                "IMO" in type_text
+                or "IMO" in num_text.upper()
+                or "VESSEL REGISTRATION" in type_text
+            ):
+                return imo
     return None
 
 
@@ -109,18 +118,59 @@ def _extract_vessel_info(entry_elem: ET.Element) -> dict:
     return info
 
 
-def _strip_namespaces(root: ET.Element):
-    """Remove XML namespaces from all elements for easier parsing."""
-    for elem in root.iter():
-        if "}" in elem.tag:
-            elem.tag = elem.tag.split("}", 1)[1]
-        # Also strip namespace from attributes
-        cleaned_attrib = {}
-        for key, value in elem.attrib.items():
-            if "}" in key:
-                key = key.split("}", 1)[1]
-            cleaned_attrib[key] = value
-        elem.attrib = cleaned_attrib
+def _extract_addresses(entry_elem: ET.Element) -> list[dict]:
+    """Extract address snippets for optional downstream geocoding/map enrichment."""
+    addresses: list[dict] = []
+    address_list = entry_elem.find("addressList")
+    if address_list is None:
+        return addresses
+
+    for address in address_list.findall("address"):
+        address1 = address.find("address1")
+        city = address.find("city")
+        country = address.find("country")
+        if not any(node is not None and node.text for node in (address1, city, country)):
+            continue
+        addresses.append({
+            "address1": address1.text.strip() if address1 is not None and address1.text else "",
+            "city": city.text.strip() if city is not None and city.text else "",
+            "country": country.text.strip() if country is not None and country.text else "",
+        })
+    return addresses
+
+
+def _parse_imo_number(value: str) -> Optional[int]:
+    """Extract and validate a 7-digit IMO number from mixed text."""
+    if not value:
+        return None
+
+    # Preferred explicit format: "IMO 7406784"
+    explicit = re.search(r"\bIMO\W*(\d{7})\b", value, flags=re.IGNORECASE)
+    if explicit:
+        return int(explicit.group(1))
+
+    # Fallback for legacy plain digits in idNumber (e.g. "9876543")
+    if value.strip().isdigit() and len(value.strip()) == 7:
+        return int(value.strip())
+
+    # Last fallback for mixed registration strings containing a 7-digit IMO.
+    fallback = re.search(r"\b(\d{7})\b", value)
+    if fallback:
+        return int(fallback.group(1))
+
+    return None
+
+
+def _strip_elem_namespace(elem: ET.Element):
+    """Strip namespace in-place for one parsed element."""
+    if isinstance(elem.tag, str) and "}" in elem.tag:
+        elem.tag = elem.tag.split("}", 1)[1]
+    cleaned_attrib = {}
+    for key, value in elem.attrib.items():
+        if "}" in key:
+            key = key.split("}", 1)[1]
+        cleaned_attrib[key] = value
+    elem.attrib = cleaned_attrib
 
 
 def parse_sdn_vessels(xml_path: Optional[Path] = None) -> list[dict]:
@@ -132,21 +182,22 @@ def parse_sdn_vessels(xml_path: Optional[Path] = None) -> list[dict]:
         xml_path = download_sdn_xml()
 
     logger.info("Parsing SDN XML from %s", xml_path)
-    tree = ET.parse(str(xml_path))
-    root = tree.getroot()
-
-    # Strip namespaces for consistent parsing
-    _strip_namespaces(root)
-
-    # Get publication date
-    pub_date = ""
-    pub_date_elem = root.find("publshInformation/Publish_Date")
-    if pub_date_elem is not None and pub_date_elem.text:
-        pub_date = pub_date_elem.text.strip()
-
     vessels = []
-    for entry in root.iter("sdnEntry"):
-        _process_sdn_entry(entry, pub_date, vessels)
+    pub_date = ""
+
+    # Stream parse to avoid loading the full OFAC XML tree into memory.
+    context = ET.iterparse(str(xml_path), events=("start", "end"))
+    for event, elem in context:
+        if event != "end":
+            continue
+
+        _strip_elem_namespace(elem)
+
+        if elem.tag == "Publish_Date" and elem.text and not pub_date:
+            pub_date = elem.text.strip()
+        elif elem.tag == "sdnEntry":
+            _process_sdn_entry(elem, pub_date, vessels)
+            elem.clear()
 
     logger.info("Found %d vessel entries with IMO numbers", len(vessels))
     return vessels
@@ -185,6 +236,7 @@ def _process_sdn_entry(entry: ET.Element, pub_date: str, vessels: list[dict]):
         "designation_date": entry_date or pub_date,
         "list_name": "OFAC SDN",
         "vessel_info": vessel_info,
+        "addresses": _extract_addresses(entry),
     })
 
 

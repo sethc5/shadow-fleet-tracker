@@ -51,6 +51,11 @@ def search_vessels(
 
     logger.info("Searching OpenSanctions: q=%s imo=%s", query, imo)
     resp = requests.get(SEARCH_URL, params=params, headers=_get_headers(), timeout=30)
+
+    if resp.status_code == 401:
+        logger.warning("OpenSanctions requires API key (set OPENSANCTIONS_API_KEY)")
+        return []
+
     resp.raise_for_status()
 
     data = resp.json()

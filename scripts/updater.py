@@ -85,6 +85,7 @@ def run_cycle():
     steps = [
         (["src.cli", "ingest", "--source", "all"], "Ingest sanctions"),
         (["src.cli", "ingest", "--source", "eu"], "Ingest EU sanctions"),
+        (["src.cli", "unpack-sdn", "--output", "docs/ofac_sdn_vessels.json"], "Unpack OFAC SDN JSON"),
     ]
 
     success_count = 0
