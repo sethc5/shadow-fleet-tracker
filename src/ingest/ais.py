@@ -381,6 +381,80 @@ def ingest_all_positions(db: Database, limit: int = 50) -> int:
     return total
 
 
+def discover_new_vessels(db: Database, hours: int = 48) -> int:
+    """Discover new vessels by tracking all existing vessels and finding Russian-flagged ones.
+
+    Scans recent positions for vessels near Russian ports or with Russian flags,
+    then tracks any new ones not yet in the database.
+
+    Returns count of newly discovered vessels.
+    """
+    # Get all vessels with positions in the last N hours
+    existing_imos = {v.imo for v in db.get_all_vessels()}
+
+    # Check all tracked vessels' recent positions for Russian port proximity
+    new_count = 0
+    for vessel in db.get_all_vessels():
+        positions = db.get_positions(vessel.imo, limit=100)
+        if not positions:
+            continue
+
+        # Check if any position is near a Russian port
+        for pos in positions:
+            for port_lat, port_lon, port_name in RUSSIAN_PORTS:
+                dist = _haversine(pos.lat, pos.lon, port_lat, port_lon)
+                if dist < 50:
+                    # This vessel is near Russia — make sure it's tracked
+                    if vessel.imo not in existing_imos:
+                        db.upsert_vessel(vessel)
+                        new_count += 1
+                    break
+
+    # Also search for Russian-flagged vessels via OpenSanctions
+    try:
+        from .opensanctions import search_vessels
+        results = search_vessels(query="Russian tanker oil", limit=100)
+        for r in results:
+            parsed = _parse_opensanctions_result(r)
+            if parsed.get("imo") and parsed["imo"] not in existing_imos:
+                vessel = Vessel(
+                    imo=parsed["imo"],
+                    name=parsed.get("name", f"UNKNOWN-{parsed['imo']}"),
+                    flag=parsed.get("flag"),
+                    vessel_type=parsed.get("vessel_type"),
+                    built_year=parsed.get("built_year"),
+                    owner=parsed.get("owner"),
+                )
+                db.upsert_vessel(vessel)
+                new_count += 1
+                existing_imos.add(parsed["imo"])
+    except Exception as e:
+        logger.warning("OpenSanctions discovery failed: %s", e)
+
+    logger.info("Discovered %d new vessels", new_count)
+    return new_count
+
+
+def _parse_opensanctions_result(result: dict) -> dict:
+    """Parse an OpenSanctions result (inline to avoid circular import)."""
+    props = result.get("properties", {})
+    imo = None
+    imo_numbers = props.get("imoNumber", [])
+    if imo_numbers:
+        for val in imo_numbers:
+            if val and str(val).isdigit():
+                imo = int(val)
+                break
+    return {
+        "imo": imo,
+        "name": props.get("name", [""])[0] if props.get("name") else "",
+        "flag": props.get("flag", [""])[0] if props.get("flag") else None,
+        "vessel_type": props.get("type", [""])[0] if props.get("type") else None,
+        "built_year": None,
+        "owner": props.get("owner", [""])[0] if props.get("owner") else None,
+    }
+
+
 # =============================================================================
 # Evasion behavior detectors
 # =============================================================================

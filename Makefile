@@ -1,4 +1,4 @@
-.PHONY: install test ingest score digest serve status track track-all export map site publish telegram-send telegram-bot sync-osintukraine clean docker-build docker-ingest docker-score docker-digest
+.PHONY: install test ingest score digest serve status track track-all export map site discover daemon daemon-start daemon-stop publish telegram-send telegram-bot sync-osintukraine clean docker-build docker-ingest docker-score docker-digest
 
 VENV := .venv/bin/python
 
@@ -58,6 +58,19 @@ map:
 
 site:
 	$(VENV) -m src.cli site
+
+discover:
+	$(VENV) -m src.cli discover
+
+daemon:
+	$(VENV) -m src.cli daemon
+
+daemon-start:
+	nohup $(VENV) -m src.cli daemon > data/updater.log 2>&1 &
+	@echo "Daemon started (PID in data/updater.pid)"
+
+daemon-stop:
+	@if [ -f data/updater.pid ]; then kill $$(cat data/updater.pid) 2>/dev/null && echo "Daemon stopped"; rm -f data/updater.pid; else echo "No daemon running"; fi
 
 status:
 	$(VENV) -m src.cli status

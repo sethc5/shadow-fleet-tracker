@@ -409,6 +409,7 @@ def cmd_map(args):
     print(f"Map saved to {path}")
 
 
+
 def cmd_site(args):
     """Generate the full GitHub Pages dashboard."""
     from .viz.site import generate_site
@@ -416,6 +417,28 @@ def cmd_site(args):
     output = Path(args.output) if args.output else None
     path = generate_site(output_dir=output)
     print(f"Site generated in {path}")
+
+
+def cmd_discover(args):
+    """Discover new vessels from AIS and OpenSanctions."""
+    from .ingest.ais import discover_new_vessels
+
+    db = Database()
+    new = discover_new_vessels(db, hours=args.hours)
+    print(f"Discovered {new} new vessels")
+
+
+def cmd_daemon(args):
+    """Run the hourly updater daemon."""
+    import subprocess
+
+    cmd = [sys.executable, "scripts/updater.py"]
+    if args.once:
+        cmd.append("--once")
+    if args.interval:
+        cmd.extend(["--interval", str(args.interval)])
+
+    subprocess.run(cmd)
 
 
 def cmd_cleanup(args):
@@ -472,6 +495,15 @@ def main():
 
     p_status = subparsers.add_parser("status", help="Show database statistics")
     p_status.set_defaults(func=cmd_status)
+
+    p_discover = subparsers.add_parser("discover", help="Discover new vessels from AIS/OpenSanctions")
+    p_discover.add_argument("--hours", type=int, default=48, help="Look back N hours (default: 48)")
+    p_discover.set_defaults(func=cmd_discover)
+
+    p_daemon = subparsers.add_parser("daemon", help="Run hourly updater daemon")
+    p_daemon.add_argument("--once", action="store_true", help="Run one cycle and exit")
+    p_daemon.add_argument("--interval", type=int, default=3600, help="Seconds between cycles (default: 3600)")
+    p_daemon.set_defaults(func=cmd_daemon)
 
     p_site = subparsers.add_parser("site", help="Generate full GitHub Pages dashboard")
     p_site.add_argument("--output", help="Output directory (default: docs/)")
