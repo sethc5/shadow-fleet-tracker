@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 
 # --- Source configurations ---
 
-AISHUB_BASE = "http://data.aishub.net"
+AISHUB_BASE = "https://data.aishub.net"
 VESSELFINDER_API = "https://www.vesselfinder.com/api/pub"
 BARENTSWATCH_API = "https://live.ais.barentswatch.no/v1/latest/combined/by"
 
@@ -30,10 +30,23 @@ TIMEOUT = 15
 def fetch_aishub(mmsi: int) -> list[dict]:
     """Fetch vessel position from AISHub.
 
+    Requires AISHUB_USERNAME env var (free registration at aishub.net).
     Returns list of dicts with: lat, lon, speed, course, timestamp
     """
-    url = f"{AISHUB_BASE}/stations.php"
-    params = {"mmsi": mmsi, "format": 1, "output": "json"}
+    import os
+
+    username = os.environ.get("AISHUB_USERNAME")
+    if not username:
+        logger.debug("AISHub username not configured (set AISHUB_USERNAME)")
+        return []
+
+    url = f"{AISHUB_BASE}/ws.php"
+    params = {
+        "username": username,
+        "format": 1,
+        "output": "json",
+        "mmsi": mmsi,
+    }
 
     try:
         resp = requests.get(url, params=params, timeout=TIMEOUT)
