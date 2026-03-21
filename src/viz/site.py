@@ -178,6 +178,7 @@ def _generate_index(db: Database, output: Path, today: str, now: str):
         <div class="links">
             <a href="map.html">🗺️ Interactive Map</a>
             <a href="data.json" class="secondary">📊 JSON Data</a>
+            <a href="ofac_sdn_vessels.json" class="secondary">🧾 OFAC SDN</a>
             <a href="archive.html" class="secondary">📁 Archive</a>
             <a href="https://github.com" class="secondary">⭐ GitHub</a>
         </div>
