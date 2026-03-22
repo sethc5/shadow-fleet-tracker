@@ -1,6 +1,6 @@
 {
   "generated": "2026-03-22",
-  "generated_at": "2026-03-22T10:30:42.811335+00:00",
+  "generated_at": "2026-03-22T10:34:46.239671+00:00",
   "total_vessels": 1449,
   "total_sanctions": 1916,
   "vessels": [
@@ -21740,5 +21740,5 @@
       "last_position": null
     }
   ],
-  "_cache_bust": "2026-03-22T10:30:42.811335+00:00"
+  "_cache_bust": "2026-03-22T10:34:46.239671+00:00"
 }
