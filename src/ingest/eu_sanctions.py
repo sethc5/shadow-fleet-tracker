@@ -12,8 +12,11 @@ from ..models import SanctionEntry, SanctionSource, Vessel
 
 logger = logging.getLogger(__name__)
 
-# EU sanctions CSV export URL (from sanctionsmap.eu or EU consolidated list)
-EU_CONSOLIDATED_URL = "https://webgate.ec.europa.eu/fsd/fsf/public/files/csvFullSanctionsList.csv"
+# EU sanctions CSV export URLs (multiple sources, tried in order)
+EU_URLS = [
+    "https://sanctionsmap.eu/api/v1/sanctions/export/csv",  # sanctionsmap.eu mirror
+    "https://webgate.ec.europa.eu/fsd/fsf/public/files/csvFullSanctionsList.csv",  # Official EU
+]
 CACHE_DIR = Path("data") / "raw"
 CACHE_FILE = CACHE_DIR / "eu_sanctions.csv"
 
@@ -25,23 +28,39 @@ REGULATION_COLS = ["regulation_number", "Regulation number", "regulation"]
 
 
 def download_eu_csv(force: bool = False) -> Path:
-    """Download EU consolidated sanctions list CSV."""
+    """Download EU consolidated sanctions list CSV.
+    
+    Tries multiple URLs in order until one succeeds.
+    """
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
 
     if CACHE_FILE.exists() and not force:
         logger.info("Using cached EU sanctions CSV at %s", CACHE_FILE)
         return CACHE_FILE
 
-    logger.info("Downloading EU sanctions CSV from %s", EU_CONSOLIDATED_URL)
-    resp = requests.get(EU_CONSOLIDATED_URL, timeout=120, stream=True)
-    resp.raise_for_status()
-
-    with open(CACHE_FILE, "wb") as f:
-        for chunk in resp.iter_content(chunk_size=8192):
-            f.write(chunk)
-
-    logger.info("Downloaded EU sanctions CSV to %s", CACHE_FILE)
-    return CACHE_FILE
+    for url in EU_URLS:
+        try:
+            logger.info("Downloading EU sanctions CSV from %s", url)
+            resp = requests.get(url, timeout=120, stream=True)
+            resp.raise_for_status()
+            
+            with open(CACHE_FILE, "wb") as f:
+                for chunk in resp.iter_content(chunk_size=8192):
+                    f.write(chunk)
+            
+            logger.info("Downloaded EU sanctions CSV to %s", CACHE_FILE)
+            return CACHE_FILE
+            
+        except requests.RequestException as e:
+            logger.warning("EU sanctions download from %s failed: %s", url, e)
+            continue
+    
+    # If all URLs failed, return cached file if available
+    if CACHE_FILE.exists():
+        logger.warning("All EU URLs failed, using cached file")
+        return CACHE_FILE
+    
+    raise RuntimeError("Failed to download EU sanctions from all sources")
 
 
 def _find_column(headers: list[str], candidates: list[str]) -> str | None:

@@ -34,12 +34,13 @@ jobs:
           pip install -e .
 
       - name: Ingest All Sanctions Sources
+        continue-on-error: true
         run: |
           mkdir -p data/raw
           echo "=== Ingesting OFAC SDN ==="
           python -m src.cli ingest --source ofac --force
-          echo "=== Ingesting EU Sanctions ==="
-          python -m src.cli ingest --source eu --force
+          echo "=== Ingesting EU Sanctions (optional) ==="
+          python -m src.cli ingest --source eu --force || echo "EU sanctions skipped (unavailable)"
           echo "=== Ingesting OpenSanctions ==="
           python -m src.cli ingest --source opensanctions
           echo "=== Ingesting TankerTrackers ==="

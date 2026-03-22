@@ -20,8 +20,11 @@ ENV/
 *.swo
 
 # Data (local SQLite, downloaded files)
-data/
-*.db
+data/raw/
+data/*.db
+data/export.csv
+data/digests/
+data/map.html
 !data/vessels.db
 sdn.xml
 
