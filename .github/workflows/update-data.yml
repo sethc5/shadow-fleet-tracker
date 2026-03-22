@@ -33,19 +33,35 @@ jobs:
           python -m pip install --upgrade pip
           pip install -e .
 
-      - name: Ingest OFAC And Build Site
+      - name: Ingest All Sanctions Sources
         run: |
-          rm -f data/vessels.db
           mkdir -p data/raw
+          echo "=== Ingesting OFAC SDN ==="
           python -m src.cli ingest --source ofac --force
+          echo "=== Ingesting EU Sanctions ==="
+          python -m src.cli ingest --source eu --force
+          echo "=== Ingesting OpenSanctions ==="
+          python -m src.cli ingest --source opensanctions
+          echo "=== Ingesting TankerTrackers ==="
+          python -m src.cli ingest --source tankertrackers --force
+          echo "=== Unpacking OFAC SDN to JSON ==="
           python -m src.cli unpack-sdn --output docs/ofac_sdn_vessels.json --force
+          echo "=== Running risk scoring ==="
+          python -m src.cli score
+          echo "=== Cleaning up old positions (keep 90 days) ==="
+          python -m src.cli cleanup --days 90
+          echo "=== Tracking top 50 vessels ==="
+          python -m src.cli track-all --limit 50
+          echo "=== Generating site ==="
           python -m src.cli site
+          echo "=== Database stats ==="
+          python -m src.cli status
           echo "=== Generated files ==="
           ls -la docs/
           echo "=== Data timestamp ==="
           head -3 docs/data.json
 
-      - name: Commit And Push If Changed
+      - name: Commit Database And Docs
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -53,14 +69,24 @@ jobs:
           echo "=== Checking for changes ==="
           git status
           
-          if git diff --quiet -- docs; then
-            echo "No docs changes detected."
-            exit 0
+          # Commit database separately (LFS)
+          if ! git diff --quiet -- data/vessels.db; then
+            echo "=== Database changed, committing ==="
+            git add data/vessels.db
+            git commit -m "auto-update database ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+          else
+            echo "No database changes detected."
           fi
           
-          echo "=== Changes detected, committing ==="
-          git add docs
-          git commit -m "auto-update docs ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+          # Commit docs
+          if ! git diff --quiet -- docs; then
+            echo "=== Docs changed, committing ==="
+            git add docs
+            git commit -m "auto-update docs ($(date -u +'%Y-%m-%d %H:%M UTC'))"
+          else
+            echo "No docs changes detected."
+          fi
+          
           echo "=== Pushing changes ==="
           git push origin main
           echo "=== Push complete ==="

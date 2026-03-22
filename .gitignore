@@ -22,6 +22,7 @@ ENV/
 # Data (local SQLite, downloaded files)
 data/
 *.db
+!data/vessels.db
 sdn.xml
 
 # Environment
