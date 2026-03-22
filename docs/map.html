@@ -1,23 +1,23 @@
-<!DOCTYPE html>
-<html>
-<head>
+<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -> Trust Notebook</span><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
     
-    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; /&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/&gt;
     
-            <meta name="viewport" content="width=device-width,
-                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-            <style>
-                #map_b6e46aa07a9ccd6bb42dd2042bae5ffa {
+            &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; /&gt;
+            &lt;style&gt;
+                #map_b46a667ae9b8826488266cbe5bb66219 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -25,52 +25,52 @@
                     top: 0.0%;
                 }
                 .leaflet-container { font-size: 1rem; }
-            </style>
+            &lt;/style&gt;
 
-            <style>html, body {
+            &lt;style&gt;html, body {
                 width: 100%;
                 height: 100%;
                 margin: 0;
                 padding: 0;
             }
-            </style>
+            &lt;/style&gt;
 
-            <style>#map {
+            &lt;style&gt;#map {
                 position:absolute;
                 top:0;
                 bottom:0;
                 right:0;
                 left:0;
                 }
-            </style>
+            &lt;/style&gt;
 
-            <script>
+            &lt;script&gt;
                 L_NO_TOUCH = false;
                 L_DISABLE_3D = false;
-            </script>
+            &lt;/script&gt;
 
         
-    <script src="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css"/>
-</head>
-<body>
+    &lt;script src=&quot;https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.min.js&quot;&gt;&lt;/script&gt;
+    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet.fullscreen@3.0.0/Control.FullScreen.css&quot;/&gt;
+&lt;/head&gt;
+&lt;body&gt;
     
     
-            <div class="folium-map" id="map_b6e46aa07a9ccd6bb42dd2042bae5ffa" ></div>
+            &lt;div class=&quot;folium-map&quot; id=&quot;map_b46a667ae9b8826488266cbe5bb66219&quot; &gt;&lt;/div&gt;
         
-</body>
-<script>
+&lt;/body&gt;
+&lt;script&gt;
     
     
-            var map_b6e46aa07a9ccd6bb42dd2042bae5ffa = L.map(
-                "map_b6e46aa07a9ccd6bb42dd2042bae5ffa",
+            var map_b46a667ae9b8826488266cbe5bb66219 = L.map(
+                &quot;map_b46a667ae9b8826488266cbe5bb66219&quot;,
                 {
                     center: [55.0, 20.0],
                     crs: L.CRS.EPSG3857,
                     ...{
-  "zoom": 5,
-  "zoomControl": true,
-  "preferCanvas": false,
+  &quot;zoom&quot;: 5,
+  &quot;zoomControl&quot;: true,
+  &quot;preferCanvas&quot;: false,
 }
 
                 }
@@ -80,449 +80,449 @@
 
         
     
-            var tile_layer_1ba6581107eb46f37d0fa4f0bdf6aecb = L.tileLayer(
-                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+            var tile_layer_c9af80c08ed698e3d8c1fb6f8bc98d3e = L.tileLayer(
+                &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
                 {
-  "minZoom": 0,
-  "maxZoom": 19,
-  "maxNativeZoom": 19,
-  "noWrap": false,
-  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
-  "subdomains": "abc",
-  "detectRetina": false,
-  "tms": false,
-  "opacity": 1,
+  &quot;minZoom&quot;: 0,
+  &quot;maxZoom&quot;: 19,
+  &quot;maxNativeZoom&quot;: 19,
+  &quot;noWrap&quot;: false,
+  &quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors&quot;,
+  &quot;subdomains&quot;: &quot;abc&quot;,
+  &quot;detectRetina&quot;: false,
+  &quot;tms&quot;: false,
+  &quot;opacity&quot;: 1,
 }
 
             );
         
     
-            tile_layer_1ba6581107eb46f37d0fa4f0bdf6aecb.addTo(map_b6e46aa07a9ccd6bb42dd2042bae5ffa);
+            tile_layer_c9af80c08ed698e3d8c1fb6f8bc98d3e.addTo(map_b46a667ae9b8826488266cbe5bb66219);
         
     
-            var feature_group_6c0488e492d77e9ee5d662a14fe1ab75 = L.featureGroup(
+            var feature_group_510e52c45777b313873a2173559472b2 = L.featureGroup(
                 {
 }
             );
         
     
-            var circle_02b2c5f23c2fb1059d3db5c3f2992f8e = L.circle(
+            var circle_5b92421d329746627ace0b53e18c9539 = L.circle(
                 [59.88, 29.88],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.1, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 30000, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-        var popup_4413d8496a3f5a6694d0ef103efafc1c = L.popup({
-  "maxWidth": 200,
+        var popup_6b3f7f6dd8e7ffe0ca97336dccdcb4c8 = L.popup({
+  &quot;maxWidth&quot;: 200,
 });
 
         
             
-                var html_f4d15a44171e2be6e3bb3c96325a4675 = $(`<div id="html_f4d15a44171e2be6e3bb3c96325a4675" style="width: 100.0%; height: 100.0%;"><b>Primorsk</b><br>Russian oil export port</div>`)[0];
-                popup_4413d8496a3f5a6694d0ef103efafc1c.setContent(html_f4d15a44171e2be6e3bb3c96325a4675);
+                var html_fc71a33035f29bf081e18bf7bf5191e6 = $(`&lt;div id=&quot;html_fc71a33035f29bf081e18bf7bf5191e6&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Primorsk&lt;/b&gt;&lt;br&gt;Russian oil export port&lt;/div&gt;`)[0];
+                popup_6b3f7f6dd8e7ffe0ca97336dccdcb4c8.setContent(html_fc71a33035f29bf081e18bf7bf5191e6);
             
         
 
-        circle_02b2c5f23c2fb1059d3db5c3f2992f8e.bindPopup(popup_4413d8496a3f5a6694d0ef103efafc1c)
+        circle_5b92421d329746627ace0b53e18c9539.bindPopup(popup_6b3f7f6dd8e7ffe0ca97336dccdcb4c8)
         ;
 
         
     
     
-            var marker_ad6921709b2280490ccf51d9faf60175 = L.marker(
+            var marker_ade1ee3697f0a395b63273a115cd5adb = L.marker(
                 [59.88, 29.88],
                 {
 }
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-            var icon_33bbadcd976a573f12242ffe8eb3bb21 = L.AwesomeMarkers.icon(
+            var icon_5c4fdc7bb8ff60f9a9bc226e2fe35b71 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "anchor",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
+  &quot;markerColor&quot;: &quot;red&quot;,
+  &quot;iconColor&quot;: &quot;white&quot;,
+  &quot;icon&quot;: &quot;anchor&quot;,
+  &quot;prefix&quot;: &quot;glyphicon&quot;,
+  &quot;extraClasses&quot;: &quot;fa-rotate-0&quot;,
 }
             );
         
     
-        var popup_69a718da9e085f8290cb614779d72fa5 = L.popup({
-  "maxWidth": "100%",
+        var popup_9cff378f835c982fbb63d9762fe2edc1 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_0b8484f3e2032b8d8849a4bb9d7113f5 = $(`<div id="html_0b8484f3e2032b8d8849a4bb9d7113f5" style="width: 100.0%; height: 100.0%;">Primorsk</div>`)[0];
-                popup_69a718da9e085f8290cb614779d72fa5.setContent(html_0b8484f3e2032b8d8849a4bb9d7113f5);
+                var html_156b089f0bc61a8de56a26e50e009764 = $(`&lt;div id=&quot;html_156b089f0bc61a8de56a26e50e009764&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Primorsk&lt;/div&gt;`)[0];
+                popup_9cff378f835c982fbb63d9762fe2edc1.setContent(html_156b089f0bc61a8de56a26e50e009764);
             
         
 
-        marker_ad6921709b2280490ccf51d9faf60175.bindPopup(popup_69a718da9e085f8290cb614779d72fa5)
+        marker_ade1ee3697f0a395b63273a115cd5adb.bindPopup(popup_9cff378f835c982fbb63d9762fe2edc1)
         ;
 
         
     
     
-                marker_ad6921709b2280490ccf51d9faf60175.setIcon(icon_33bbadcd976a573f12242ffe8eb3bb21);
+                marker_ade1ee3697f0a395b63273a115cd5adb.setIcon(icon_5c4fdc7bb8ff60f9a9bc226e2fe35b71);
             
     
-            var circle_ef65e9b6c2526a40694bc78adf6d1ed4 = L.circle(
+            var circle_8f8e0b3b3e6bdf0d27d16791d7bb5a5f = L.circle(
                 [59.68, 28.31],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.1, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 30000, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-        var popup_10f3351066d5ecba3d1d0b985538ba0c = L.popup({
-  "maxWidth": 200,
+        var popup_1d1f517b36cb6cc7afc10bca702b8b7c = L.popup({
+  &quot;maxWidth&quot;: 200,
 });
 
         
             
-                var html_90af8a66cb2d7d712e516bf719caea95 = $(`<div id="html_90af8a66cb2d7d712e516bf719caea95" style="width: 100.0%; height: 100.0%;"><b>Ust-Luga</b><br>Russian oil export port</div>`)[0];
-                popup_10f3351066d5ecba3d1d0b985538ba0c.setContent(html_90af8a66cb2d7d712e516bf719caea95);
+                var html_5ae43ef3dc332d87cb860781ed4049f4 = $(`&lt;div id=&quot;html_5ae43ef3dc332d87cb860781ed4049f4&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Ust-Luga&lt;/b&gt;&lt;br&gt;Russian oil export port&lt;/div&gt;`)[0];
+                popup_1d1f517b36cb6cc7afc10bca702b8b7c.setContent(html_5ae43ef3dc332d87cb860781ed4049f4);
             
         
 
-        circle_ef65e9b6c2526a40694bc78adf6d1ed4.bindPopup(popup_10f3351066d5ecba3d1d0b985538ba0c)
+        circle_8f8e0b3b3e6bdf0d27d16791d7bb5a5f.bindPopup(popup_1d1f517b36cb6cc7afc10bca702b8b7c)
         ;
 
         
     
     
-            var marker_5862f5200fb5bd0a2291280bda58165e = L.marker(
+            var marker_0b972ffae4f84a7329be94de28585d35 = L.marker(
                 [59.68, 28.31],
                 {
 }
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-            var icon_0d7f066943f9b1c49b3f6fd5afad853b = L.AwesomeMarkers.icon(
+            var icon_ed0a33b08d87dc7072bf9cd4f0d921a1 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "anchor",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
+  &quot;markerColor&quot;: &quot;red&quot;,
+  &quot;iconColor&quot;: &quot;white&quot;,
+  &quot;icon&quot;: &quot;anchor&quot;,
+  &quot;prefix&quot;: &quot;glyphicon&quot;,
+  &quot;extraClasses&quot;: &quot;fa-rotate-0&quot;,
 }
             );
         
     
-        var popup_899587b92fb7b86cb95e9df274026ccc = L.popup({
-  "maxWidth": "100%",
+        var popup_7f88fa206959e2526029d46c87e2937e = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_8d5bb5c60f6edb26583cd5d69ea1d2b0 = $(`<div id="html_8d5bb5c60f6edb26583cd5d69ea1d2b0" style="width: 100.0%; height: 100.0%;">Ust-Luga</div>`)[0];
-                popup_899587b92fb7b86cb95e9df274026ccc.setContent(html_8d5bb5c60f6edb26583cd5d69ea1d2b0);
+                var html_6afafcda1493f9d50d4a94c6307715dd = $(`&lt;div id=&quot;html_6afafcda1493f9d50d4a94c6307715dd&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Ust-Luga&lt;/div&gt;`)[0];
+                popup_7f88fa206959e2526029d46c87e2937e.setContent(html_6afafcda1493f9d50d4a94c6307715dd);
             
         
 
-        marker_5862f5200fb5bd0a2291280bda58165e.bindPopup(popup_899587b92fb7b86cb95e9df274026ccc)
+        marker_0b972ffae4f84a7329be94de28585d35.bindPopup(popup_7f88fa206959e2526029d46c87e2937e)
         ;
 
         
     
     
-                marker_5862f5200fb5bd0a2291280bda58165e.setIcon(icon_0d7f066943f9b1c49b3f6fd5afad853b);
+                marker_0b972ffae4f84a7329be94de28585d35.setIcon(icon_ed0a33b08d87dc7072bf9cd4f0d921a1);
             
     
-            var circle_d0fabe6be969cb09e5dfccf7cc69dcb7 = L.circle(
+            var circle_046e1f16ad2bde71eccd87cc0520710f = L.circle(
                 [44.72, 37.77],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.1, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 30000, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-        var popup_ee7a0f78f9a1df8162a70b85bed9e810 = L.popup({
-  "maxWidth": 200,
+        var popup_7df9921f19121d803a0a863c732905d4 = L.popup({
+  &quot;maxWidth&quot;: 200,
 });
 
         
             
-                var html_d9e9e6e945e7494d2a15650910d48852 = $(`<div id="html_d9e9e6e945e7494d2a15650910d48852" style="width: 100.0%; height: 100.0%;"><b>Novorossiysk</b><br>Russian oil export port</div>`)[0];
-                popup_ee7a0f78f9a1df8162a70b85bed9e810.setContent(html_d9e9e6e945e7494d2a15650910d48852);
+                var html_cadac5da5b250b4178b5c2b257701557 = $(`&lt;div id=&quot;html_cadac5da5b250b4178b5c2b257701557&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Novorossiysk&lt;/b&gt;&lt;br&gt;Russian oil export port&lt;/div&gt;`)[0];
+                popup_7df9921f19121d803a0a863c732905d4.setContent(html_cadac5da5b250b4178b5c2b257701557);
             
         
 
-        circle_d0fabe6be969cb09e5dfccf7cc69dcb7.bindPopup(popup_ee7a0f78f9a1df8162a70b85bed9e810)
+        circle_046e1f16ad2bde71eccd87cc0520710f.bindPopup(popup_7df9921f19121d803a0a863c732905d4)
         ;
 
         
     
     
-            var marker_7a5c51abc52e0df31b28fa95111d8291 = L.marker(
+            var marker_2eae654910863abe38244d72f92cc1bf = L.marker(
                 [44.72, 37.77],
                 {
 }
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-            var icon_d44095e36ce388e7163e517832d7f8c5 = L.AwesomeMarkers.icon(
+            var icon_1213917062163bb9140ed169394f4198 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "anchor",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
+  &quot;markerColor&quot;: &quot;red&quot;,
+  &quot;iconColor&quot;: &quot;white&quot;,
+  &quot;icon&quot;: &quot;anchor&quot;,
+  &quot;prefix&quot;: &quot;glyphicon&quot;,
+  &quot;extraClasses&quot;: &quot;fa-rotate-0&quot;,
 }
             );
         
     
-        var popup_cb9ab65c2820db8591837cb71f28a4b3 = L.popup({
-  "maxWidth": "100%",
+        var popup_1621820ec4d68e77673753727c4d26d7 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_a2cd06a5c4b448c88eb13f24b04db6dc = $(`<div id="html_a2cd06a5c4b448c88eb13f24b04db6dc" style="width: 100.0%; height: 100.0%;">Novorossiysk</div>`)[0];
-                popup_cb9ab65c2820db8591837cb71f28a4b3.setContent(html_a2cd06a5c4b448c88eb13f24b04db6dc);
+                var html_8226339f08f9321425e3052fe84094dc = $(`&lt;div id=&quot;html_8226339f08f9321425e3052fe84094dc&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Novorossiysk&lt;/div&gt;`)[0];
+                popup_1621820ec4d68e77673753727c4d26d7.setContent(html_8226339f08f9321425e3052fe84094dc);
             
         
 
-        marker_7a5c51abc52e0df31b28fa95111d8291.bindPopup(popup_cb9ab65c2820db8591837cb71f28a4b3)
+        marker_2eae654910863abe38244d72f92cc1bf.bindPopup(popup_1621820ec4d68e77673753727c4d26d7)
         ;
 
         
     
     
-                marker_7a5c51abc52e0df31b28fa95111d8291.setIcon(icon_d44095e36ce388e7163e517832d7f8c5);
+                marker_2eae654910863abe38244d72f92cc1bf.setIcon(icon_1213917062163bb9140ed169394f4198);
             
     
-            var circle_76bab780a42651caee5befd17c88343f = L.circle(
+            var circle_bf053fcb646111cc8606f352e7edbf24 = L.circle(
                 [45.34, 36.67],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.1, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 30000, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-        var popup_9bb682691ac501048aceb42be8981fa5 = L.popup({
-  "maxWidth": 200,
+        var popup_bafae475872af422153de538a362ecc0 = L.popup({
+  &quot;maxWidth&quot;: 200,
 });
 
         
             
-                var html_385982c67b74c735a0f7523830671eb7 = $(`<div id="html_385982c67b74c735a0f7523830671eb7" style="width: 100.0%; height: 100.0%;"><b>Kavkaz</b><br>Russian oil export port</div>`)[0];
-                popup_9bb682691ac501048aceb42be8981fa5.setContent(html_385982c67b74c735a0f7523830671eb7);
+                var html_298ab2d23607dd6e3e16a4bbf2055134 = $(`&lt;div id=&quot;html_298ab2d23607dd6e3e16a4bbf2055134&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Kavkaz&lt;/b&gt;&lt;br&gt;Russian oil export port&lt;/div&gt;`)[0];
+                popup_bafae475872af422153de538a362ecc0.setContent(html_298ab2d23607dd6e3e16a4bbf2055134);
             
         
 
-        circle_76bab780a42651caee5befd17c88343f.bindPopup(popup_9bb682691ac501048aceb42be8981fa5)
+        circle_bf053fcb646111cc8606f352e7edbf24.bindPopup(popup_bafae475872af422153de538a362ecc0)
         ;
 
         
     
     
-            var marker_45621ff88a40f78d3a7450649c6a2864 = L.marker(
+            var marker_dca2c987b681651eb843339db3ba87c5 = L.marker(
                 [45.34, 36.67],
                 {
 }
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-            var icon_f063b30c0344d7baa6426ab83137a459 = L.AwesomeMarkers.icon(
+            var icon_1548314f6adf5806c960a65daf70bf40 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "anchor",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
+  &quot;markerColor&quot;: &quot;red&quot;,
+  &quot;iconColor&quot;: &quot;white&quot;,
+  &quot;icon&quot;: &quot;anchor&quot;,
+  &quot;prefix&quot;: &quot;glyphicon&quot;,
+  &quot;extraClasses&quot;: &quot;fa-rotate-0&quot;,
 }
             );
         
     
-        var popup_03011e19105082f7bba464f5af635333 = L.popup({
-  "maxWidth": "100%",
+        var popup_8f225306a1dc8f88ad5a6c1679173a53 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_ae6f7ab081c7ce22495b9197ad505d76 = $(`<div id="html_ae6f7ab081c7ce22495b9197ad505d76" style="width: 100.0%; height: 100.0%;">Kavkaz</div>`)[0];
-                popup_03011e19105082f7bba464f5af635333.setContent(html_ae6f7ab081c7ce22495b9197ad505d76);
+                var html_9f010b301f3e05dec7a1638c998361d7 = $(`&lt;div id=&quot;html_9f010b301f3e05dec7a1638c998361d7&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Kavkaz&lt;/div&gt;`)[0];
+                popup_8f225306a1dc8f88ad5a6c1679173a53.setContent(html_9f010b301f3e05dec7a1638c998361d7);
             
         
 
-        marker_45621ff88a40f78d3a7450649c6a2864.bindPopup(popup_03011e19105082f7bba464f5af635333)
+        marker_dca2c987b681651eb843339db3ba87c5.bindPopup(popup_8f225306a1dc8f88ad5a6c1679173a53)
         ;
 
         
     
     
-                marker_45621ff88a40f78d3a7450649c6a2864.setIcon(icon_f063b30c0344d7baa6426ab83137a459);
+                marker_dca2c987b681651eb843339db3ba87c5.setIcon(icon_1548314f6adf5806c960a65daf70bf40);
             
     
-            var circle_ca09b3b27c9584f378d6f3c747c082da = L.circle(
+            var circle_a69e52e290329b62f5ad7640c749fc0f = L.circle(
                 [43.08, 131.89],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.1, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 30000, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-        var popup_8133b159294a31435993db1e36f8297a = L.popup({
-  "maxWidth": 200,
+        var popup_2ae4cc30b974017565f5f003314ba661 = L.popup({
+  &quot;maxWidth&quot;: 200,
 });
 
         
             
-                var html_37f9222c3d04c0a346b75e32c5586988 = $(`<div id="html_37f9222c3d04c0a346b75e32c5586988" style="width: 100.0%; height: 100.0%;"><b>Vladivostok</b><br>Russian oil export port</div>`)[0];
-                popup_8133b159294a31435993db1e36f8297a.setContent(html_37f9222c3d04c0a346b75e32c5586988);
+                var html_bba1cb611bc3eb62d26f3c366d8a6d5f = $(`&lt;div id=&quot;html_bba1cb611bc3eb62d26f3c366d8a6d5f&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Vladivostok&lt;/b&gt;&lt;br&gt;Russian oil export port&lt;/div&gt;`)[0];
+                popup_2ae4cc30b974017565f5f003314ba661.setContent(html_bba1cb611bc3eb62d26f3c366d8a6d5f);
             
         
 
-        circle_ca09b3b27c9584f378d6f3c747c082da.bindPopup(popup_8133b159294a31435993db1e36f8297a)
+        circle_a69e52e290329b62f5ad7640c749fc0f.bindPopup(popup_2ae4cc30b974017565f5f003314ba661)
         ;
 
         
     
     
-            var marker_27a2ff7f51e5de3a6c90d98f227394c7 = L.marker(
+            var marker_868d0d68753c977021e673f52b880964 = L.marker(
                 [43.08, 131.89],
                 {
 }
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-            var icon_14958a0db37e3abd55efe34c838916c2 = L.AwesomeMarkers.icon(
+            var icon_8dc98b5d48f1a51c55926272bf582f80 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "anchor",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
+  &quot;markerColor&quot;: &quot;red&quot;,
+  &quot;iconColor&quot;: &quot;white&quot;,
+  &quot;icon&quot;: &quot;anchor&quot;,
+  &quot;prefix&quot;: &quot;glyphicon&quot;,
+  &quot;extraClasses&quot;: &quot;fa-rotate-0&quot;,
 }
             );
         
     
-        var popup_ecfa7226ec04f415a5d8202d1b9eb321 = L.popup({
-  "maxWidth": "100%",
+        var popup_1354376534fb9527bb929d05c4708146 = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_97a54cf7df468225acd99d1ee12eee58 = $(`<div id="html_97a54cf7df468225acd99d1ee12eee58" style="width: 100.0%; height: 100.0%;">Vladivostok</div>`)[0];
-                popup_ecfa7226ec04f415a5d8202d1b9eb321.setContent(html_97a54cf7df468225acd99d1ee12eee58);
+                var html_ed926ccccadfe57199691e3765138796 = $(`&lt;div id=&quot;html_ed926ccccadfe57199691e3765138796&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Vladivostok&lt;/div&gt;`)[0];
+                popup_1354376534fb9527bb929d05c4708146.setContent(html_ed926ccccadfe57199691e3765138796);
             
         
 
-        marker_27a2ff7f51e5de3a6c90d98f227394c7.bindPopup(popup_ecfa7226ec04f415a5d8202d1b9eb321)
+        marker_868d0d68753c977021e673f52b880964.bindPopup(popup_1354376534fb9527bb929d05c4708146)
         ;
 
         
     
     
-                marker_27a2ff7f51e5de3a6c90d98f227394c7.setIcon(icon_14958a0db37e3abd55efe34c838916c2);
+                marker_868d0d68753c977021e673f52b880964.setIcon(icon_8dc98b5d48f1a51c55926272bf582f80);
             
     
-            var circle_319992d0b33130fc92474f1c7a14c4cc = L.circle(
+            var circle_0eeb53152eb63e6f9454c9f3b6c9be46 = L.circle(
                 [69.0, 33.02],
-                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 30000, "stroke": true, "weight": 3}
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+                {&quot;bubblingMouseEvents&quot;: true, &quot;color&quot;: &quot;red&quot;, &quot;dashArray&quot;: null, &quot;dashOffset&quot;: null, &quot;fill&quot;: true, &quot;fillColor&quot;: &quot;red&quot;, &quot;fillOpacity&quot;: 0.1, &quot;fillRule&quot;: &quot;evenodd&quot;, &quot;lineCap&quot;: &quot;round&quot;, &quot;lineJoin&quot;: &quot;round&quot;, &quot;opacity&quot;: 1.0, &quot;radius&quot;: 30000, &quot;stroke&quot;: true, &quot;weight&quot;: 3}
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-        var popup_6df4a8a46b2185d76e8c0ff8dbd282a5 = L.popup({
-  "maxWidth": 200,
+        var popup_357b7cce530c2e7493653a3453657b5c = L.popup({
+  &quot;maxWidth&quot;: 200,
 });
 
         
             
-                var html_e8749f79c3ce1eea9f1c82b1035c36c7 = $(`<div id="html_e8749f79c3ce1eea9f1c82b1035c36c7" style="width: 100.0%; height: 100.0%;"><b>Murmansk</b><br>Russian oil export port</div>`)[0];
-                popup_6df4a8a46b2185d76e8c0ff8dbd282a5.setContent(html_e8749f79c3ce1eea9f1c82b1035c36c7);
+                var html_ee3f5d9c91e1e50bfaf7fa193b33da7c = $(`&lt;div id=&quot;html_ee3f5d9c91e1e50bfaf7fa193b33da7c&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;&lt;b&gt;Murmansk&lt;/b&gt;&lt;br&gt;Russian oil export port&lt;/div&gt;`)[0];
+                popup_357b7cce530c2e7493653a3453657b5c.setContent(html_ee3f5d9c91e1e50bfaf7fa193b33da7c);
             
         
 
-        circle_319992d0b33130fc92474f1c7a14c4cc.bindPopup(popup_6df4a8a46b2185d76e8c0ff8dbd282a5)
+        circle_0eeb53152eb63e6f9454c9f3b6c9be46.bindPopup(popup_357b7cce530c2e7493653a3453657b5c)
         ;
 
         
     
     
-            var marker_0704b32870cddb66b5d454ff1f8470e9 = L.marker(
+            var marker_96ebddcfb0b9b57cfdb8f8463a22aaf8 = L.marker(
                 [69.0, 33.02],
                 {
 }
-            ).addTo(feature_group_6c0488e492d77e9ee5d662a14fe1ab75);
+            ).addTo(feature_group_510e52c45777b313873a2173559472b2);
         
     
-            var icon_fe21cd514403d2160cbb28a46cc42264 = L.AwesomeMarkers.icon(
+            var icon_34cfb4feb6015f02301473333070d624 = L.AwesomeMarkers.icon(
                 {
-  "markerColor": "red",
-  "iconColor": "white",
-  "icon": "anchor",
-  "prefix": "glyphicon",
-  "extraClasses": "fa-rotate-0",
+  &quot;markerColor&quot;: &quot;red&quot;,
+  &quot;iconColor&quot;: &quot;white&quot;,
+  &quot;icon&quot;: &quot;anchor&quot;,
+  &quot;prefix&quot;: &quot;glyphicon&quot;,
+  &quot;extraClasses&quot;: &quot;fa-rotate-0&quot;,
 }
             );
         
     
-        var popup_343e5488aa03372d6b5b495efdd3905b = L.popup({
-  "maxWidth": "100%",
+        var popup_ee53eaf4bf6f522c185455260de7e2cb = L.popup({
+  &quot;maxWidth&quot;: &quot;100%&quot;,
 });
 
         
             
-                var html_27aae2b0324ab26c86712014c687777b = $(`<div id="html_27aae2b0324ab26c86712014c687777b" style="width: 100.0%; height: 100.0%;">Murmansk</div>`)[0];
-                popup_343e5488aa03372d6b5b495efdd3905b.setContent(html_27aae2b0324ab26c86712014c687777b);
+                var html_32271daeea29baa874b8d261ff38160d = $(`&lt;div id=&quot;html_32271daeea29baa874b8d261ff38160d&quot; style=&quot;width: 100.0%; height: 100.0%;&quot;&gt;Murmansk&lt;/div&gt;`)[0];
+                popup_ee53eaf4bf6f522c185455260de7e2cb.setContent(html_32271daeea29baa874b8d261ff38160d);
             
         
 
-        marker_0704b32870cddb66b5d454ff1f8470e9.bindPopup(popup_343e5488aa03372d6b5b495efdd3905b)
+        marker_96ebddcfb0b9b57cfdb8f8463a22aaf8.bindPopup(popup_ee53eaf4bf6f522c185455260de7e2cb)
         ;
 
         
     
     
-                marker_0704b32870cddb66b5d454ff1f8470e9.setIcon(icon_fe21cd514403d2160cbb28a46cc42264);
+                marker_96ebddcfb0b9b57cfdb8f8463a22aaf8.setIcon(icon_34cfb4feb6015f02301473333070d624);
             
     
-            feature_group_6c0488e492d77e9ee5d662a14fe1ab75.addTo(map_b6e46aa07a9ccd6bb42dd2042bae5ffa);
+            feature_group_510e52c45777b313873a2173559472b2.addTo(map_b46a667ae9b8826488266cbe5bb66219);
         
     
-            var feature_group_77cb13e793d49e3c4c3a6f0699110b52 = L.featureGroup(
+            var feature_group_225d15ee2eeab8f0b2242cdd3b54d417 = L.featureGroup(
                 {
 }
             );
         
     
-            feature_group_77cb13e793d49e3c4c3a6f0699110b52.addTo(map_b6e46aa07a9ccd6bb42dd2042bae5ffa);
+            feature_group_225d15ee2eeab8f0b2242cdd3b54d417.addTo(map_b46a667ae9b8826488266cbe5bb66219);
         
     
-            var feature_group_95f58828130cee040c84bbdf2c194f63 = L.featureGroup(
+            var feature_group_9b121fc73b71ccc71f240ad0db809d26 = L.featureGroup(
                 {
 }
             );
         
     
-            feature_group_95f58828130cee040c84bbdf2c194f63.addTo(map_b6e46aa07a9ccd6bb42dd2042bae5ffa);
+            feature_group_9b121fc73b71ccc71f240ad0db809d26.addTo(map_b46a667ae9b8826488266cbe5bb66219);
         
     
-            var layer_control_adc52069f10f7d638264865f4947882d_layers = {
+            var layer_control_6f32ff5b6153eb60023397b39c8bda99_layers = {
                 base_layers : {
-                    "openstreetmap" : tile_layer_1ba6581107eb46f37d0fa4f0bdf6aecb,
+                    &quot;openstreetmap&quot; : tile_layer_c9af80c08ed698e3d8c1fb6f8bc98d3e,
                 },
                 overlays :  {
-                    "Russian Oil Ports" : feature_group_6c0488e492d77e9ee5d662a14fe1ab75,
-                    "Vessels" : feature_group_77cb13e793d49e3c4c3a6f0699110b52,
-                    "AIS Dark Zones" : feature_group_95f58828130cee040c84bbdf2c194f63,
+                    &quot;Russian Oil Ports&quot; : feature_group_510e52c45777b313873a2173559472b2,
+                    &quot;Vessels&quot; : feature_group_225d15ee2eeab8f0b2242cdd3b54d417,
+                    &quot;AIS Dark Zones&quot; : feature_group_9b121fc73b71ccc71f240ad0db809d26,
                 },
             };
-            let layer_control_adc52069f10f7d638264865f4947882d = L.control.layers(
-                layer_control_adc52069f10f7d638264865f4947882d_layers.base_layers,
-                layer_control_adc52069f10f7d638264865f4947882d_layers.overlays,
+            let layer_control_6f32ff5b6153eb60023397b39c8bda99 = L.control.layers(
+                layer_control_6f32ff5b6153eb60023397b39c8bda99_layers.base_layers,
+                layer_control_6f32ff5b6153eb60023397b39c8bda99_layers.overlays,
                 {
-  "position": "topright",
-  "collapsed": true,
-  "autoZIndex": true,
+  &quot;position&quot;: &quot;topright&quot;,
+  &quot;collapsed&quot;: true,
+  &quot;autoZIndex&quot;: true,
 }
-            ).addTo(map_b6e46aa07a9ccd6bb42dd2042bae5ffa);
+            ).addTo(map_b46a667ae9b8826488266cbe5bb66219);
 
         
     
             L.control.fullscreen(
                 {
-  "position": "topleft",
-  "title": "Full Screen",
-  "titleCancel": "Exit Full Screen",
-  "forceSeparateButton": false,
+  &quot;position&quot;: &quot;topleft&quot;,
+  &quot;title&quot;: &quot;Full Screen&quot;,
+  &quot;titleCancel&quot;: &quot;Exit Full Screen&quot;,
+  &quot;forceSeparateButton&quot;: false,
 }
-            ).addTo(map_b6e46aa07a9ccd6bb42dd2042bae5ffa);
+            ).addTo(map_b46a667ae9b8826488266cbe5bb66219);
         
-</script>
-</html>
+&lt;/script&gt;
+&lt;/html&gt;" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen webkitallowfullscreen mozallowfullscreen></iframe></div></div>
