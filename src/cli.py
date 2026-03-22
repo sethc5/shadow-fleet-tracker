@@ -4,6 +4,7 @@ import argparse
 import logging
 import sys
 from pathlib import Path
+from typing import Optional
 
 from .db import Database
 from .scoring import run_scoring
@@ -450,18 +451,29 @@ def cmd_cleanup(args):
 
 
 def cmd_unpack_sdn(args):
-    """Unpack OFAC SDN XML vessel entries into JSON."""
+    """Unpack OFAC SDN XML vessel entries into JSON.
+    
+    By default, uses the freshly downloaded SDN XML from data/raw/sdn.xml.
+    Use --xml to specify a custom path, or --force to download fresh.
+    """
     import json
     from datetime import UTC, datetime
 
-    from .ingest.ofac import parse_sdn_vessels
+    from .ingest.ofac import download_sdn_xml, parse_sdn_vessels
 
+    xml_path: Optional[Path] = None
+    
     if args.xml:
         xml_path = Path(args.xml)
+    elif args.force:
+        # Force fresh download
+        xml_path = download_sdn_xml(force=True)
+    elif (Path("data") / "raw" / "sdn.xml").exists():
+        # Use freshly downloaded file from ingest step
+        xml_path = Path("data/raw/sdn.xml")
     elif Path("sdn.xml").exists():
+        # Fallback to repo root cached file
         xml_path = Path("sdn.xml")
-    else:
-        xml_path = None
 
     output = Path(args.output)
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -552,6 +564,7 @@ def main():
 
     p_unpack = subparsers.add_parser("unpack-sdn", help="Unpack OFAC SDN XML vessel entries to JSON")
     p_unpack.add_argument("--xml", help="Path to SDN XML (default: ./sdn.xml if present)")
+    p_unpack.add_argument("--force", action="store_true", help="Force fresh download from OFAC")
     p_unpack.add_argument("--output", default="docs/ofac_sdn_vessels.json", help="Output JSON file")
     p_unpack.set_defaults(func=cmd_unpack_sdn)
 

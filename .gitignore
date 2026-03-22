@@ -22,6 +22,7 @@ ENV/
 # Data (local SQLite, downloaded files)
 data/
 *.db
+sdn.xml
 
 # Environment
 .env

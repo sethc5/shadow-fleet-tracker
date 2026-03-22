@@ -37,7 +37,7 @@ jobs:
         run: |
           rm -f data/vessels.db
           python -m src.cli ingest --source ofac --force
-          python -m src.cli unpack-sdn --output docs/ofac_sdn_vessels.json
+          python -m src.cli unpack-sdn --output docs/ofac_sdn_vessels.json --force
           python -m src.cli site
 
       - name: Commit And Push If Changed
