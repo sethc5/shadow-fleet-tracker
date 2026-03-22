@@ -5,6 +5,8 @@ from datetime import datetime
 from enum import Enum
 from typing import Optional
 
+from .constants import HIGH_RISK_FLAGS
+
 
 class SanctionSource(str, Enum):
     OFAC = "ofac"
@@ -12,18 +14,6 @@ class SanctionSource(str, Enum):
     UK = "uk"
     OPENSANCTIONS = "opensanctions"
     TANKERTRACKERS = "tankertrackers"
-
-
-HIGH_RISK_FLAGS = {
-    "CM",  # Cameroon
-    "SL",  # Sierra Leone
-    "KM",  # Comoros
-    "PW",  # Palau
-    "CK",  # Cook Islands
-    "TZ",  # Tanzania
-    "PA",  # Panama (some registrations)
-    "MH",  # Marshall Islands (some registrations)
-}
 
 
 @dataclass

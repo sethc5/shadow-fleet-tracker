@@ -24,6 +24,13 @@ DEFAULTS = {
         "alert_threshold": 60,
         "high_risk_flags": ["CM", "SL", "KM", "PW", "CK", "TZ"],
     },
+    "ingestion": {
+        "max_retries": 3,
+        "retry_delay_seconds": 5,
+        "timeout_seconds": 30,
+        "batch_size": 100,
+        "rate_limit_delay": 1.5,
+    },
     "output": {
         "digest_max_vessels": 20,
         "digest_max_alerts": 50,

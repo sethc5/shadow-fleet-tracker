@@ -52,29 +52,61 @@ def remove_pid():
         PID_FILE.unlink()
 
 
-def run_cmd(cmd: list[str], desc: str) -> bool:
-    """Run a CLI command and log the result."""
-    logger.info("Running: %s", desc)
-    try:
-        result = subprocess.run(
-            [PYTHON, "-m"] + cmd,
-            cwd=str(PROJECT_DIR),
-            capture_output=True,
-            text=True,
-            timeout=600,  # 10 minute timeout per step
-        )
-        if result.returncode != 0:
-            logger.error("%s failed: %s", desc, result.stderr[:500])
+def run_cmd(cmd: list[str], desc: str, retries: int = 3, delay: int = 5) -> bool:
+    """Run a CLI command and log the result.
+    
+    Args:
+        cmd: Command to run as list of strings
+        desc: Human-readable description for logging
+        retries: Number of retry attempts on failure
+        delay: Delay between retries in seconds
+        
+    Returns:
+        True if command succeeded, False otherwise
+    """
+    attempt = 0
+    while attempt <= retries:
+        logger.info("Running: %s (attempt %d/%d)", desc, attempt + 1, retries + 1)
+        try:
+            result = subprocess.run(
+                [PYTHON, "-m"] + cmd,
+                cwd=str(PROJECT_DIR),
+                capture_output=True,
+                text=True,
+                timeout=600,  # 10 minute timeout per step
+            )
+            if result.returncode != 0:
+                error_msg = result.stderr[:500] if result.stderr else "Unknown error"
+                logger.error("%s failed: %s", desc, error_msg)
+                attempt += 1
+                if attempt <= retries:
+                    logger.info("Retrying in %d seconds...", delay)
+                    time.sleep(delay)
+                    continue
+                return False
+            
+            if result.stdout.strip():
+                logger.info("%s: %s", desc, result.stdout.strip()[-200:])
+            return True
+            
+        except subprocess.TimeoutExpired:
+            logger.error("%s timed out", desc)
+            attempt += 1
+            if attempt <= retries:
+                logger.info("Retrying in %d seconds...", delay)
+                time.sleep(delay)
+                continue
             return False
-        if result.stdout.strip():
-            logger.info("%s: %s", desc, result.stdout.strip()[-200:])
-        return True
-    except subprocess.TimeoutExpired:
-        logger.error("%s timed out", desc)
-        return False
-    except Exception as e:
-        logger.error("%s error: %s", desc, e)
-        return False
+        except Exception as e:
+            logger.error("%s error: %s", desc, e)
+            attempt += 1
+            if attempt <= retries:
+                logger.info("Retrying in %d seconds...", delay)
+                time.sleep(delay)
+                continue
+            return False
+    
+    return False
 
 
 def run_cycle():

@@ -4,20 +4,11 @@ import logging
 from datetime import datetime, timedelta
 
 from .config import get_config
+from .constants import HIGH_RISK_FLAGS, RUSSIAN_PORTS
 from .db import Database
 from .models import Alert, Vessel
 
 logger = logging.getLogger(__name__)
-
-# Major Russian oil export ports (lat, lon, name)
-RUSSIAN_PORTS = [
-    (59.88, 29.88, "Primorsk"),
-    (59.68, 28.31, "Ust-Luga"),
-    (44.72, 37.77, "Novorossiysk"),
-    (45.34, 36.67, "Kavkaz"),
-    (43.08, 131.89, "Vladivostok"),
-    (69.00, 33.02, "Murmansk"),
-]
 
 
 def _get_weights() -> dict:
@@ -29,7 +20,11 @@ def _get_threshold() -> int:
 
 
 def _get_high_risk_flags() -> set:
-    return set(f.upper() for f in get_config()["scoring"]["high_risk_flags"])
+    # Use config if overridden, otherwise use defaults from constants
+    config_flags = get_config()["scoring"].get("high_risk_flags", [])
+    if config_flags:
+        return set(f.upper() for f in config_flags)
+    return HIGH_RISK_FLAGS.copy()
 
 
 def score_vessel(db: Database, imo: int) -> tuple[int, list[str]]:

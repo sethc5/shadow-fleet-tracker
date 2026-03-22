@@ -36,11 +36,20 @@ def client(db):
 
 
 def test_health_endpoint(client):
+    """Test health endpoint returns database and vessel info.
+    
+    Note: External API checks may return 'degraded' status if services
+    are unreachable during testing, which is expected behavior.
+    """
     resp = client.get("/health")
     assert resp.status_code == 200
     data = resp.json()
-    assert data["status"] == "ok"
+    # Status can be 'healthy' or 'degraded' depending on external API availability
+    assert data["status"] in ("healthy", "degraded")
+    assert data["database"] == "healthy"
     assert "vessels" in data
+    assert "sanctions" in data
+    assert "external_apis" in data
 
 
 def test_vessel_endpoint_not_found(client):

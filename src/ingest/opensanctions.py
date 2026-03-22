@@ -6,6 +6,7 @@ from typing import Optional
 
 import requests
 
+from .opensanctions_parser import parse_opensanctions_result
 from ..db import Database
 from ..models import SanctionEntry, SanctionSource, Vessel
 
@@ -69,57 +70,6 @@ def lookup_by_imo(imo: int) -> list[dict]:
     return search_vessels(imo=imo)
 
 
-def _parse_opensanctions_result(result: dict) -> dict:
-    """Parse an OpenSanctions result into our vessel format."""
-    props = result.get("properties", {})
-
-    # Extract IMO from identifiers
-    imo = None
-    imo_numbers = props.get("imoNumber", [])
-    if imo_numbers:
-        for val in imo_numbers:
-            if val and str(val).isdigit():
-                imo = int(val)
-                break
-
-    name = props.get("name", [""])[0] if props.get("name") else ""
-    flag = props.get("flag", [""])[0] if props.get("flag") else None
-    vessel_type = props.get("type", [""])[0] if props.get("type") else None
-
-    # Built year
-    built_year = None
-    build_dates = props.get("buildDate", [])
-    if build_dates:
-        for d in build_dates:
-            if d and len(str(d)) >= 4:
-                try:
-                    built_year = int(str(d)[:4])
-                    break
-                except ValueError:
-                    pass
-
-    # Owner
-    owner = props.get("owner", [""])[0] if props.get("owner") else None
-
-    # Sanctions programs
-    programs = props.get("program", [])
-
-    # Source link
-    source_url = result.get("id", "")
-
-    return {
-        "imo": imo,
-        "name": name,
-        "flag": flag,
-        "vessel_type": vessel_type,
-        "built_year": built_year,
-        "owner": owner,
-        "programs": programs if programs else ["OpenSanctions"],
-        "source_url": source_url,
-        "raw": result,
-    }
-
-
 def ingest_opensanctions(db: Database, query: str = "shadow fleet Russia oil tanker") -> int:
     """Search OpenSanctions and ingest matching vessels.
 
@@ -130,7 +80,7 @@ def ingest_opensanctions(db: Database, query: str = "shadow fleet Russia oil tan
 
     count = 0
     for result in results:
-        parsed = _parse_opensanctions_result(result)
+        parsed = parse_opensanctions_result(result)
         if parsed["imo"] is None:
             continue
 

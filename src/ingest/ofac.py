@@ -8,6 +8,7 @@ from typing import Optional
 
 import requests
 
+from ..constants import RUSSIA_PROGRAMS
 from ..db import Database
 from ..models import SanctionEntry, SanctionSource, Vessel
 
@@ -18,16 +19,6 @@ CACHE_DIR = Path("data") / "raw"
 CACHE_FILE = CACHE_DIR / "sdn.xml"
 
 # OFAC programs related to Russia / Ukraine sanctions
-RUSSIA_PROGRAMS = {
-    "UKRAINE-EO14024",
-    "UKRAINE-EO13662",
-    "RUSSIA-EO14024",
-    "RUSSIA-EO13662",
-    "CYBER2",
-    "CYBER",
-    "NPWMD",
-    "IFSR",
-}
 
 
 def download_sdn_xml(force: bool = False) -> Path:

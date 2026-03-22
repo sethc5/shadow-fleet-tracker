@@ -1,11 +1,13 @@
 """SQLite database connection, schema, and CRUD operations."""
 
+import logging
 import os
 import sqlite3
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Optional
 
+from .constants import SCHEMA_VERSION
 from .models import Alert, Position, SanctionEntry, SanctionSource, Vessel
 
 DEFAULT_DB_PATH = Path("data") / "vessels.db"
@@ -94,8 +96,53 @@ class Database:
         self._init_schema()
 
     def _init_schema(self):
+        """Initialize database schema with versioning and migrations."""
         with self.connection() as conn:
-            conn.executescript(SCHEMA_SQL)
+            # Create schema_version table if it doesn't exist
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS schema_version (
+                    id INTEGER PRIMARY KEY CHECK (id = 1),
+                    version INTEGER NOT NULL,
+                    updated_at TEXT DEFAULT (datetime('now'))
+                )
+            """)
+            
+            # Get current version
+            row = conn.execute("SELECT version FROM schema_version WHERE id = 1").fetchone()
+            current_version = row[0] if row else 0
+            
+            # Run base schema if new database
+            if current_version == 0:
+                conn.executescript(SCHEMA_SQL)
+                conn.execute(
+                    "INSERT INTO schema_version (id, version) VALUES (1, ?)",
+                    (SCHEMA_VERSION,)
+                )
+            elif current_version < SCHEMA_VERSION:
+                # Run migrations
+                self._migrate_schema(conn, current_version, SCHEMA_VERSION)
+                conn.execute(
+                    "UPDATE schema_version SET version = ?, updated_at = datetime('now') WHERE id = 1",
+                    (SCHEMA_VERSION,)
+                )
+
+    def _migrate_schema(self, conn, from_version: int, to_version: int):
+        """Run schema migrations from one version to another.
+        
+        Add new migration functions as schema evolves:
+        - Migration 1->2: Add new columns
+        - Migration 2->3: Add new tables
+        etc.
+        """
+        logger = logging.getLogger(__name__)
+        logger.info("Migrating schema from v%d to v%d", from_version, to_version)
+        
+        # Example migration pattern:
+        # if from_version < 2:
+        #     conn.execute("ALTER TABLE vessels ADD COLUMN new_column TEXT")
+        #     from_version = 2
+        
+        logger.info("Schema migration complete")
 
     @contextmanager
     def connection(self):

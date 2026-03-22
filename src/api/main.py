@@ -84,7 +84,99 @@ class FleetSummary(BaseModel):
 
 @app.get("/health", tags=["system"])
 async def health():
-    return {"status": "ok", "vessels": db.vessel_count(), "sanctions": db.sanctions_count()}
+    """Health check endpoint with external API status.
+    
+    Checks:
+    - Local database connectivity
+    - OpenSanctions API availability
+    - AIS data sources (AISHub, BarentsWatch)
+    
+    Returns overall status and individual component health.
+    """
+    import httpx
+    
+    health_status = {
+        "status": "healthy",
+        "database": "unknown",
+        "external_apis": {},
+        "vessels": db.vessel_count(),
+        "sanctions": db.sanctions_count(),
+    }
+    
+    # Check database
+    try:
+        with db.connection() as conn:
+            conn.execute("SELECT 1")
+        health_status["database"] = "healthy"
+    except Exception as e:
+        health_status["database"] = f"unhealthy: {str(e)}"
+        health_status["status"] = "degraded"
+    
+    # Check OpenSanctions API (lightweight check)
+    try:
+        async with httpx.AsyncClient(timeout=5.0) as client:
+            resp = await client.get(
+                "https://api.opensanctions.org/search/",
+                params={"q": "test", "limit": 1},
+            )
+            if resp.status_code == 200:
+                health_status["external_apis"]["opensanctions"] = "healthy"
+            elif resp.status_code == 401:
+                health_status["external_apis"]["opensanctions"] = "auth_required"
+            else:
+                health_status["external_apis"]["opensanctions"] = f"unhealthy: {resp.status_code}"
+    except Exception as e:
+        health_status["external_apis"]["opensanctions"] = f"unreachable: {str(e)[:50]}"
+    
+    # Check AISHub (only if configured)
+    import os
+    aishub_user = os.environ.get("AISHUB_USERNAME")
+    if aishub_user:
+        try:
+            async with httpx.AsyncClient(timeout=5.0) as client:
+                resp = await client.get(
+                    "https://data.aishub.net/ws.php",
+                    params={"username": aishub_user, "format": 1, "output": "json"},
+                )
+                if resp.status_code == 200:
+                    health_status["external_apis"]["aishub"] = "healthy"
+                else:
+                    health_status["external_apis"]["aishub"] = f"unhealthy: {resp.status_code}"
+        except Exception as e:
+            health_status["external_apis"]["aishub"] = f"unreachable: {str(e)[:50]}"
+    else:
+        health_status["external_apis"]["aishub"] = "not_configured"
+    
+    # Check BarentsWatch (only if configured)
+    bw_client_id = os.environ.get("BARENTSWATCH_CLIENT_ID")
+    if bw_client_id:
+        try:
+            async with httpx.AsyncClient(timeout=5.0) as client:
+                # Just check if auth endpoint is reachable
+                resp = await client.post(
+                    "https://id.barentswatch.no/connect/token",
+                    data={"grant_type": "client_credentials"},
+                )
+                # 400/401 means service is up but credentials may be wrong
+                if resp.status_code in (200, 400, 401):
+                    health_status["external_apis"]["barentswatch"] = "reachable"
+                else:
+                    health_status["external_apis"]["barentswatch"] = f"unhealthy: {resp.status_code}"
+        except Exception as e:
+            health_status["external_apis"]["barentswatch"] = f"unreachable: {str(e)[:50]}"
+    else:
+        health_status["external_apis"]["barentswatch"] = "not_configured"
+    
+    # Determine overall status
+    api_statuses = list(health_status["external_apis"].values())
+    if health_status["database"] != "healthy":
+        health_status["status"] = "degraded"
+    elif all(s in ("healthy", "reachable", "auth_required", "not_configured") for s in api_statuses):
+        health_status["status"] = "healthy"
+    else:
+        health_status["status"] = "degraded"
+    
+    return health_status
 
 
 @app.get("/vessel/{imo}", response_model=VesselResponse, tags=["vessels"])

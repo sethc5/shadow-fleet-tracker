@@ -7,9 +7,16 @@ from typing import Optional
 
 import requests
 
+from ..constants import (
+    AIS_DARK_THRESHOLD_HOURS,
+    PORT_PROXIMITY_RADIUS_KM,
+    RUSSIAN_PORTS,
+    STS_PROXIMITY_KM,
+)
 from ..db import Database
+from ..ingest.opensanctions_parser import parse_opensanctions_result
 from ..models import Position, Vessel
-from ..scoring import RUSSIAN_PORTS, _haversine
+from ..scoring import _haversine
 
 logger = logging.getLogger(__name__)
 
@@ -416,7 +423,7 @@ def discover_new_vessels(db: Database, hours: int = 48) -> int:
         for pos in positions:
             for port_lat, port_lon, port_name in RUSSIAN_PORTS:
                 dist = _haversine(pos.lat, pos.lon, port_lat, port_lon)
-                if dist < 50:
+                if dist < 50:  # Within 50km of a Russian port
                     # This vessel is near Russia — make sure it's tracked
                     if vessel.imo not in existing_imos:
                         db.upsert_vessel(vessel)
@@ -428,7 +435,7 @@ def discover_new_vessels(db: Database, hours: int = 48) -> int:
         from .opensanctions import search_vessels
         results = search_vessels(query="Russian tanker oil", limit=100)
         for r in results:
-            parsed = _parse_opensanctions_result(r)
+            parsed = parse_opensanctions_result(r)
             if parsed.get("imo") and parsed["imo"] not in existing_imos:
                 vessel = Vessel(
                     imo=parsed["imo"],
@@ -448,31 +455,14 @@ def discover_new_vessels(db: Database, hours: int = 48) -> int:
     return new_count
 
 
-def _parse_opensanctions_result(result: dict) -> dict:
-    """Parse an OpenSanctions result (inline to avoid circular import)."""
-    props = result.get("properties", {})
-    imo = None
-    imo_numbers = props.get("imoNumber", [])
-    if imo_numbers:
-        for val in imo_numbers:
-            if val and str(val).isdigit():
-                imo = int(val)
-                break
-    return {
-        "imo": imo,
-        "name": props.get("name", [""])[0] if props.get("name") else "",
-        "flag": props.get("flag", [""])[0] if props.get("flag") else None,
-        "vessel_type": props.get("type", [""])[0] if props.get("type") else None,
-        "built_year": None,
-        "owner": props.get("owner", [""])[0] if props.get("owner") else None,
-    }
-
-
 # =============================================================================
 # Evasion behavior detectors
 # =============================================================================
 
-def detect_dark_events(positions: list[dict], gap_hours: float = 6.0) -> list[dict]:
+def detect_dark_events(
+    positions: list[dict],
+    gap_hours: float = AIS_DARK_THRESHOLD_HOURS,
+) -> list[dict]:
     """Detect AIS dark periods (gaps in reporting).
 
     Returns list of gap dicts with: gap_start, gap_end, duration_hours, near_russia
@@ -521,7 +511,10 @@ def detect_dark_events(positions: list[dict], gap_hours: float = 6.0) -> list[di
     return gaps
 
 
-def detect_port_calls(positions: list[dict], radius_km: float = 30.0) -> list[dict]:
+def detect_port_calls(
+    positions: list[dict],
+    radius_km: float = PORT_PROXIMITY_RADIUS_KM,
+) -> list[dict]:
     """Detect proximity to Russian oil export ports.
 
     Returns list of port call dicts with: port_name, lat, lon, timestamp, distance_km
@@ -548,11 +541,14 @@ def detect_port_calls(positions: list[dict], radius_km: float = 30.0) -> list[di
     return calls
 
 
-def detect_sts_transfers(positions: list[dict], all_vessel_positions: dict[int, list[dict]]) -> list[dict]:
+def detect_sts_transfers(
+    positions: list[dict],
+    all_vessel_positions: dict[int, list[dict]],
+) -> list[dict]:
     """Detect potential ship-to-ship transfers.
 
     Heuristic: two vessels both have dark periods that overlap, and their
-    last positions before going dark are within 10km of each other.
+    last positions before going dark are within STS_PROXIMITY_KM of each other.
 
     Args:
         positions: Positions for the target vessel
@@ -579,7 +575,7 @@ def detect_sts_transfers(positions: list[dict], all_vessel_positions: dict[int, 
                         gap["start_lat"], gap["start_lon"],
                         other_gap["start_lat"], other_gap["start_lon"],
                     )
-                    if dist < 10:  # Within 10km
+                    if dist < STS_PROXIMITY_KM:  # Within 10km
                         transfers.append({
                             "vessel_1_gap": gap,
                             "vessel_2_imo": other_imo,
@@ -605,10 +601,24 @@ def _safe_float(value) -> Optional[float]:
 
 
 def _parse_timestamp(ts: str) -> Optional[datetime]:
-    """Parse various timestamp formats."""
+    """Parse various timestamp formats, handling timezone-aware datetimes.
+    
+    Args:
+        ts: Timestamp string in various formats
+        
+    Returns:
+        datetime object (naive, converted to UTC if timezone-aware)
+    """
     if not ts:
         return None
 
+    ts = ts.strip()
+    
+    # Handle empty or invalid strings
+    if not ts or ts.lower() in ("null", "none", "n/a"):
+        return None
+
+    # Try common formats first (faster than fromisoformat)
     formats = [
         "%Y-%m-%dT%H:%M:%S",
         "%Y-%m-%dT%H:%M:%SZ",
@@ -620,13 +630,27 @@ def _parse_timestamp(ts: str) -> Optional[datetime]:
 
     for fmt in formats:
         try:
-            return datetime.strptime(ts.strip(), fmt)
+            return datetime.strptime(ts, fmt)
         except ValueError:
             continue
 
-    # Try ISO format
+    # Try ISO format with timezone handling
     try:
-        return datetime.fromisoformat(ts.strip().replace("Z", "+00:00"))
+        # Replace Z with +00:00 for fromisoformat compatibility
+        ts_normalized = ts.replace("Z", "+00:00")
+        
+        # Handle timezone offset without colon (e.g., +0000)
+        if len(ts_normalized) > 19 and ts_normalized[-5:-4] in ("+", "-") and ":" not in ts_normalized[-5:]:
+            ts_normalized = ts_normalized[:-2] + ":" + ts_normalized[-2:]
+        
+        dt = datetime.fromisoformat(ts_normalized)
+        
+        # Convert to naive UTC datetime for consistency
+        if dt.tzinfo is not None:
+            from datetime import timezone
+            dt = dt.astimezone(timezone.utc).replace(tzinfo=None)
+        
+        return dt
     except ValueError:
         return None
 

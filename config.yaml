@@ -23,6 +23,14 @@ scoring:
     - CK  # Cook Islands
     - TZ  # Tanzania
 
+# Ingestion settings
+ingestion:
+  max_retries: 3                # Retry attempts for failed requests
+  retry_delay_seconds: 5        # Delay between retries
+  timeout_seconds: 30           # HTTP request timeout
+  batch_size: 100               # Records per batch insert
+  rate_limit_delay: 1.5         # Seconds between AIS requests
+
 output:
   digest_max_vessels: 20        # Max vessels shown in digest
   digest_max_alerts: 50         # Max alerts shown in digest
