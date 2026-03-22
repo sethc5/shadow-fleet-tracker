@@ -36,19 +36,31 @@ jobs:
       - name: Ingest OFAC And Build Site
         run: |
           rm -f data/vessels.db
+          mkdir -p data/raw
           python -m src.cli ingest --source ofac --force
           python -m src.cli unpack-sdn --output docs/ofac_sdn_vessels.json --force
           python -m src.cli site
+          echo "=== Generated files ==="
+          ls -la docs/
+          echo "=== Data timestamp ==="
+          head -3 docs/data.json
 
       - name: Commit And Push If Changed
         run: |
-          if git diff --quiet -- docs; then
-            echo "No docs changes."
-            exit 0
-          fi
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          
+          echo "=== Checking for changes ==="
+          git status
+          
+          if git diff --quiet -- docs; then
+            echo "No docs changes detected."
+            exit 0
+          fi
+          
+          echo "=== Changes detected, committing ==="
           git add docs
           git commit -m "auto-update docs ($(date -u +'%Y-%m-%d %H:%M UTC'))"
-          git push
+          echo "=== Pushing changes ==="
+          git push origin main
+          echo "=== Push complete ==="
