@@ -1,7 +1,7 @@
 """Static site generator for GitHub Pages dashboard."""
 
 import logging
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from ..config import get_config
@@ -50,17 +50,23 @@ def generate_site(output_dir: Path | None = None) -> Path:
 
 
 def _generate_json(db: Database, output: Path, today: str):
-    """Generate machine-readable fleet data as JSON."""
+    """Generate machine-readable fleet data as JSON.
+    
+    Includes full timestamp for cache busting and freshness verification.
+    """
     import json
 
     vessels = db.get_all_vessels()
     threshold = _get_threshold()
+    now_utc = datetime.now(timezone.utc).isoformat()
 
     data = {
         "generated": today,
+        "generated_at": now_utc,
         "total_vessels": len(vessels),
         "total_sanctions": db.sanctions_count(),
         "vessels": [],
+        "_cache_bust": now_utc,  # Explicit cache-bust field
     }
 
     for v in vessels:
@@ -91,11 +97,15 @@ def _generate_json(db: Database, output: Path, today: str):
 
 
 def _generate_index(db: Database, output: Path, today: str, now: str):
-    """Generate the main dashboard HTML page."""
+    """Generate the main dashboard HTML page.
+    
+    Includes cache-busting meta tags to ensure fresh data on each update.
+    """
     threshold = _get_threshold()
     alerts = db.get_alerts(min_score=threshold)
     sanctioned = db.get_sanctioned_vessels()
     all_vessels = db.get_all_vessels()
+    now_utc = datetime.now(timezone.utc).isoformat()
 
     with db.connection() as conn:
         row = conn.execute("SELECT COUNT(*) FROM positions").fetchone()
@@ -137,6 +147,10 @@ def _generate_index(db: Database, output: Path, today: str, now: str):
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta name="generator" content="Shadow Fleet Tracker {now_utc}">
     <title>Shadow Fleet Tracker</title>
     <style>
         * {{ margin: 0; padding: 0; box-sizing: border-box; }}
@@ -176,8 +190,8 @@ def _generate_index(db: Database, output: Path, today: str, now: str):
 
     <div class="container">
         <div class="links">
-            <a href="map.html">🗺️ Interactive Map</a>
-            <a href="data.json" class="secondary">📊 JSON Data</a>
+            <a href="map.html?v={now_utc}">🗺️ Interactive Map</a>
+            <a href="data.json?v={now_utc}" class="secondary">📊 JSON Data</a>
             <a href="ofac_sdn_vessels.json" class="secondary">🧾 OFAC SDN</a>
             <a href="archive.html" class="secondary">📁 Archive</a>
             <a href="https://github.com" class="secondary">⭐ GitHub</a>
@@ -205,7 +219,7 @@ def _generate_index(db: Database, output: Path, today: str, now: str):
         <div class="section">
             <h2>🗺️ Fleet Map</h2>
             <div class="map-container">
-                <iframe src="map.html"></iframe>
+                <iframe src="map.html?v={now_utc}"></iframe>
             </div>
         </div>
 
